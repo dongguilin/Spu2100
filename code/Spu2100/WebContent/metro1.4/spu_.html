@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<meta charset="utf-8" />
+	<title>Metronic | Layouts - Blank Page</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="assets/plugins/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+	<link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="assets/css/style-metro.css" rel="stylesheet" type="text/css"/>
+	<link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+	<link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+	<!-- BEGIN HEADER -->   
+	<div class="header navbar navbar-inverse navbar-fixed-top">
+		<!-- BEGIN TOP NAVIGATION BAR -->
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<!-- BEGIN LOGO -->
+				<a class="brand" href="index.html">
+				&nbsp;&nbsp;Spu2100监测工具
+				</a>
+				<!-- END LOGO -->
+				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+				<a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+				<img src="assets/img/menu-toggler.png" alt="" />
+				</a>          
+				<!-- END RESPONSIVE MENU TOGGLER -->            
+				<!-- BEGIN TOP NAVIGATION MENU -->              
+					<!-- BEGIN NOTIFICATION DROPDOWN -->   
+					<!-- END NOTIFICATION DROPDOWN -->
+					<!-- BEGIN INBOX DROPDOWN -->
+					<!-- END INBOX DROPDOWN -->
+					<!-- BEGIN TODO DROPDOWN -->
+					<!-- END TODO DROPDOWN -->               
+					<!-- BEGIN USER LOGIN DROPDOWN -->
+					<!-- END USER LOGIN DROPDOWN -->
+					<!-- END USER LOGIN DROPDOWN -->
+				<!-- END TOP NAVIGATION MENU --> 
+			</div>
+		</div>
+		<!-- END TOP NAVIGATION BAR -->
+	</div>
+	<!-- END HEADER -->
+	<!-- BEGIN CONTAINER -->   
+	<div class="page-container row-fluid">
+		<!-- BEGIN SIDEBAR -->
+		<div class="page-sidebar nav-collapse collapse">
+			<!-- BEGIN SIDEBAR MENU -->        
+			<ul class="page-sidebar-menu">
+				<li>
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+					<div class="sidebar-toggler hidden-phone"></div>
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+				</li>
+				<li>
+					<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+					<!-- END RESPONSIVE QUICK SEARCH FORM -->
+				</li>
+				<li class="start ">
+					<a href="index.html">
+					<i class="icon-home"></i> 
+					<span class="title">Dashboard</span>
+					</a>
+				</li>
+				
+				<li>
+					<a href="javascript:;">
+						<i class="icon-cogs"></i> 
+						<span class="title">配置文件管理</span>
+						<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li class="active"><a href="spu_.html"> 导入导出</a></li>
+						<li><a href="spu_.html"> 详情</a></li>
+						<li><a href="spu_.html"> 更新</a></li>
+					</ul>
+				</li>
+				
+				<li class="">
+					<a href="spu_.html"> <i class="icon-cogs"></i> <span
+						class="title">数据测试</span>
+					</a>
+				</li>
+				
+				<li class="last">
+					<a href="spu_.html"> <i class="icon-bar-chart"></i>  <span
+						class="title">运行状态</span>
+					</a>
+				</li>
+
+			</ul>
+			<!-- END SIDEBAR MENU -->
+		</div>
+		<!-- END SIDEBAR -->
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<div id="portlet-config" class="modal hide">
+				<div class="modal-header">
+					<button data-dismiss="modal" class="close" type="button"></button>
+					<h3>portlet Settings</h3>
+				</div>
+				<div class="modal-body">
+					<p>Here will be a configuration form</p>
+				</div>
+			</div>
+			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<div class="color-panel hidden-phone">
+							<div class="color-mode-icons icon-color"></div>
+							<div class="color-mode-icons icon-color-close"></div>
+							<div class="color-mode">
+								<p>THEME COLOR</p>
+								<ul class="inline">
+									<li class="color-black current color-default" data-style="default"></li>
+									<li class="color-blue" data-style="blue"></li>
+									<li class="color-brown" data-style="brown"></li>
+									<li class="color-purple" data-style="purple"></li>
+									<li class="color-grey" data-style="grey"></li>
+									<li class="color-white color-light" data-style="light"></li>
+								</ul>
+								<label>
+									<span>Layout</span>
+									<select class="layout-option m-wrap small">
+										<option value="fluid" selected>Fluid</option>
+										<option value="boxed">Boxed</option>
+									</select>
+								</label>
+								<label>
+									<span>Header</span>
+									<select class="header-option m-wrap small">
+										<option value="fixed" selected>Fixed</option>
+										<option value="default">Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Sidebar</span>
+									<select class="sidebar-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected>Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Footer</span>
+									<select class="footer-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected>Default</option>
+									</select>
+								</label>
+							</div>
+						</div>
+						<!-- END BEGIN STYLE CUSTOMIZER --> 
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							Blank Page <small>blank page</small>
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="index.html">Home</a> 
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">Layouts</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li><a href="#">Blank Page</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<!-- BEGIN Portlet PORTLET-->
+					<div class="span6" title="GlobeRun">
+						<div class=" portlet box blue">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-reorder"></i>机组信息配置</div>
+								<div class="tools">
+									<a href="javascript:;" class="collapse"></a>
+									<a href="javascript:;" class="reload"></a>
+								</div>
+								<div class="actions">
+									<a href="javascript:;" class="btn green mini">
+										<i class="icon-pencil"></i>编辑
+									</a>
+								</div>
+							</div>						
+							<div class="portlet-body">
+								<!-- BEGIN FORM-->
+									<form action="" class="form-horizontal">
+										<div class="form-actions">
+											<button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
+											<button type="button" class="btn">取消</button>
+										</div>
+									</form>
+								<!-- END FORM--> 
+							</div>
+						</div>
+					</div>
+					<!-- END Portlet PORTLET-->
+
+					<!-- BEGIN Portlet PORTLET-->
+					<div class="span6" title="DeviceInfo">
+						<div class=" portlet box yellow">
+							<div class="portlet-title">
+									<div class="caption"><i class="icon-reorder"></i>设备信息配置</div>
+									<div class="tools">
+										<a href="javascript:;" class="collapse"></a>
+										<a href="javascript:;" class="reload"></a>
+									</div>
+									<div class="actions">
+										<a href="javascript:;" class="btn green mini">
+											<i class="icon-pencil"></i>编辑
+										</a>
+									</div>
+							</div>	
+							<div class="portlet-body">
+								<!-- BEGIN FORM-->
+									<form action="" class="form-horizontal">
+										<div class="form-actions">
+											<button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
+											<button type="button" class="btn">取消</button>
+										</div>
+									</form>
+								<!-- END FORM--> 
+							</div>
+						</div>
+					</div>
+					<!-- END Portlet PORTLET-->
+					
+				</div>
+				
+				
+				<!-- END PAGE CONTENT-->
+			</div>
+			
+			<div class="row-fluid">
+					<div class="span6">
+						<!-- BEGIN SAMPLE FORM PORTLET-->   
+						<div class="portlet box blue tabbable">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-reorder"></i>
+									<span class="hidden-480">General Layouts</span>
+								</div>
+							</div>
+							<div class="portlet-body form">
+								<div class="tabbable portlet-tabs">
+									<ul class="nav nav-tabs" id="spu-nav-tabs">
+										<li><a href="#portlet_tab3" data-toggle="tab">Inline</a></li>
+										<!-- <li><a href="#portlet_tab2" data-toggle="tab">Grid</a></li> -->
+										<li class="active"><a href="#portlet_tab1" data-toggle="tab">Default</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="portlet_tab1">
+											<!-- BEGIN FORM-->
+											<form action="#" class="form-horizontal">
+												
+												<div class="spu_">
+													
+												</div>
+												
+												<div class="control-group">
+													<label class="control-label">Small Input</label>
+													<div class="controls">
+														<input type="text" placeholder="small" class="m-wrap small" />
+														<span class="help-inline">Some hint here</span>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Meduam Input</label>
+													<div class="controls">
+														<input type="text" placeholder="medium" class="m-wrap medium" />
+														<span class="help-inline">Some hint here</span>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Large Input</label>
+													<div class="controls">
+														<input type="text" placeholder="large" class="m-wrap large" />
+														<span class="help-inline">Some hint here</span>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Huge Input</label>
+													<div class="controls">
+														<input type="text" placeholder="huge" class="m-wrap huge" />
+														<span class="help-inline">Some hint here</span>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Disabled Input</label>
+													<div class="controls">   
+														<input class="m-wrap medium" type="text" placeholder="Disabled input here..." disabled />
+														<span class="help-inline">Some hint here</span>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Readonly Input</label>
+													<div class="controls">   
+														<input class="m-wrap medium" readonly type="text" placeholder="Readonly input here..." disabled />
+														<span class="help-inline">Some hint here</span>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Small Dropdown</label>
+													<div class="controls">
+														<select class="small m-wrap" tabindex="1">
+															<option value="Category 1">Category 1</option>
+															<option value="Category 2">Category 2</option>
+															<option value="Category 3">Category 5</option>
+															<option value="Category 4">Category 4</option>
+														</select>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Medium Dropdown</label>
+													<div class="controls">
+														<select class="medium m-wrap" tabindex="1">
+															<option value="Category 1">Category 1</option>
+															<option value="Category 2">Category 2</option>
+															<option value="Category 3">Category 5</option>
+															<option value="Category 4">Category 4</option>
+														</select>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Large Dropdown</label>
+													<div class="controls">
+														<select class="large m-wrap" tabindex="1">
+															<option value="Category 1">Category 1</option>
+															<option value="Category 2">Category 2</option>
+															<option value="Category 3">Category 5</option>
+															<option value="Category 4">Category 4</option>
+														</select>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Radio Buttons</label>
+													<div class="controls">
+														<label class="radio">
+														<input type="radio" name="optionsRadios1" value="option1" />
+														Option 1
+														</label>
+														<label class="radio">
+														<input type="radio" name="optionsRadios1" value="option2" checked />
+														Option 2
+														</label>  
+														<label class="radio">
+														<input type="radio" name="optionsRadios1" value="option2" />
+														Option 3
+														</label>  
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Radio Buttons</label>
+													<div class="controls">
+														<label class="radio line">
+														<input type="radio" name="optionsRadios2" value="option1" />
+														Option 1
+														</label>
+														<label class="radio line">
+														<input type="radio" name="optionsRadios2" value="option2" checked />
+														Option 2
+														</label>  
+														<label class="radio line">
+														<input type="radio" name="optionsRadios2" value="option2" />
+														Option 3
+														</label>  
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Checkbox</label>
+													<div class="controls">
+														<label class="checkbox">
+														<input type="checkbox" value="" /> Checkbox 1
+														</label>
+														<label class="checkbox">
+														<input type="checkbox" value="" /> Checkbox 2
+														</label>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Checkbox</label>
+													<div class="controls">
+														<label class="checkbox line">
+														<input type="checkbox" value="" /> Checkbox 1
+														</label>
+														<label class="checkbox line">
+														<input type="checkbox" value="" /> Checkbox 2
+														</label>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Textarea</label>
+													<div class="controls">
+														<textarea class="medium m-wrap" rows="3"></textarea>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">Large Textarea</label>
+													<div class="controls">
+														<textarea class="large m-wrap" rows="3"></textarea>
+													</div>
+												</div>
+												<div class="form-actions">
+													<button type="submit" class="btn blue"><i class="icon-ok"></i> Save</button>
+													<button type="button" class="btn">Cancel</button>
+												</div>
+											</form>
+											<!-- END FORM-->  
+										</div>
+
+										<div class="tab-pane " id="portlet_tab3">
+											<h4>Login Form</h4>
+											<form action="#">
+												<input type="text" class="m-wrap" placeholder="Email" /><br />
+												<input type="password" class="m-wrap" placeholder="Password" />
+												<label class="checkbox">
+												<input type="checkbox" /> Remember me
+												</label>
+												<button type="submit" class="btn green">Sign in</button>
+											</form>
+											<hr />
+											<h4>Login Form</h4>
+											<form action="#">
+												<div class="input-icon left">
+													<i class="icon-envelope"></i>
+													<input type="text" class="m-wrap" placeholder="Email" />
+												</div>
+												<div class="input-icon left">                                          
+													<i class="icon-lock"></i>
+													<input type="password" class="m-wrap" placeholder="Password" />
+												</div>
+												<label class="checkbox">
+												<input type="checkbox" /> Remember me
+												</label>
+												<button type="submit" class="btn purple">Sign in</button>
+											</form>
+											<hr />
+											<form action="#">
+												<div class="input-prepend">                
+													<button class="btn blue">Login</button><input class="m-wrap" size="16" type="password" placeholder="Your Password" />
+												</div>
+											</form>
+											<h4>Search Form</h4>
+											<form action="#">
+												<div class="input-append hidden-phone">  
+													<input class="m-wrap medium" size="10" type="text" placeholder="Twitter Username" /><button class="btn red">Search</button><button class="btn black">Back</button>
+												</div>
+												<div class="input-append visible-phone">  
+													<input class="m-wrap" size="10" type="text" placeholder="Twitter Username" /><button class="btn red">Search</button><button class="btn black">Back</button>
+												</div>
+											</form>
+											<hr />
+											<form action="#" class="form-search">
+												<div class="input-append">
+													<input class="m-wrap" type="text" /><button class="btn green" type="button">Search!</button>
+												</div>
+											</form> 
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- END SAMPLE FORM PORTLET-->
+					</div>
+				</div>
+			
+			<!-- END PAGE CONTAINER--> 
+			
+		</div>
+		
+		<!-- END PAGE -->    
+	</div>
+	<!-- END CONTAINER -->
+	<!-- BEGIN FOOTER -->
+	<div class="footer">
+		<div class="footer-inner">
+			2013 &copy; Metronic by keenthemes.
+		</div>
+		<div class="footer-tools">
+			<span class="go-top">
+			<i class="icon-angle-up"></i>
+			</span>
+		</div>
+	</div>
+	<!-- END FOOTER -->
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->   <script src="assets/plugins/jquery-1.10.1.min.js" type="text/javascript"></script>
+	<script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+	<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+	<script src="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>      
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
+	<!--[if lt IE 9]>
+	<script src="assets/plugins/excanvas.min.js"></script>
+	<script src="assets/plugins/respond.min.js"></script>  
+	<![endif]-->   
+	<script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
+	<script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+	<script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
+	<!-- END CORE PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script src="assets/scripts/app.js"></script>   
+	<script src="assets/scripts/portlet-draggable.js"></script> 
+	<!-- END PAGE LEVEL SCRIPTS -->      
+	<script>
+		jQuery(document).ready(function() {    
+		   App.init();
+		   PortletDraggable.init();
+		});
+	</script>
+
+
+	<script type="text/javascript">
+		var jsonObj = {
+			"LCD9" : {
+				"name" : "LCD9",
+				"description" : "This is LCD9",
+				"items" : [ {
+					"description" : "a",
+					"name" : "DataSource",
+					"value" : "AD9"
+				}, {
+					"description" : "b",
+					"name" : "ADNameIndex",
+					"value" : "10"
+				}, {
+					"description" : "c",
+					"name" : "MonitorName",
+					"value" : "abckd"
+				} ]
+			},
+			"LCD10" : {
+				"name" : "LCD10",
+				"description" : "This is LCD10",
+				"items" : [ {
+					"description" : "a2",
+					"name" : "DataSource",
+					"value" : "AD9"
+				}, {
+					"description" : "b2",
+					"name" : "ADNameIndex",
+					"value" : "10"
+				}, {
+					"description" : "c2",
+					"name" : "MonitorName",
+					"value" : "abckd"
+				} ]
+			}
+		};
+		//console.log(jsonObj);
+
+		
+		for ( var i in jsonObj) {
+			var config = jsonObj[i];
+
+			var $tabPane = $('<div class="tab-pane"/>').attr("id",config['name']);
+			var $form = $('<form action="#" class="form-horizontal"/>');
+			$tabPane.append($form);
+
+			var items = config['items'];
+			for ( var k in items) {
+				var item = items[k];
+				var $controlGroup = $('<div class="control-group"/>').append(
+						$('<label class="control-label"/>').text(
+								item['description'])).append(
+						$('<div class="controls"/>').append(
+								$('<input type="text" class="m-wrap small"/>')
+										.attr("name", item['name'])).append(
+								$('<span class="help-inline"/>')));
+
+				$form.append($controlGroup);
+			}
+			$('.tab-content').append($tabPane);
+			//console.log($('.tab-content'));
+			var $li=$('<li/>').append(
+					$('<a data-toggle="tab"/>')
+					.attr("href",'#'+config['name'])
+					.text(config['name']));
+			var $s=$('#spu-nav-tabs');
+			console.log($s[0]);
+			$li.prependTo($s);
+			//$s.append($li);
+			//console.log($li[0].outerHTML);
+			//$('.nav nav-tabs').append($li);
+			//$li.prependTo($(".nav nav-tabs"));
+			//console.log($('.nav nav-tabs'));
+		}
+	</script>
+
+	<!-- <script type="text/javascript" src="../js/json.js"></script> -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			var singles=["GlobeRun","DeviceInfo"];
+			
+			singles.forEach(function(key){
+				console.log(key)
+				singleTypeForm(key)
+			});
+			
+			function singleTypeForm(key){
+				var $div=$('div[title="'+key+'"]');
+				//初始化表单
+				var $form=$div.find('form').attr(
+						{"action":"../UpdateServlet","method":"get"});
+				$form.find('button').hide();
+				var url="../LoadServlet";
+				$.post(url,{key:key,type:'single'},function(data){
+					var obj = eval('(' + data + ')'); 
+					var items=obj.items;
+					var $row=$('<div class="row-fluid"/>');
+					for ( var k in items) {
+						var item = items[k];
+						var $controlGroup = $('<div class="control-group"/>').append(
+								$('<label class="control-label"/>').text(
+										item['description'])).append(
+								$('<div class="controls"/>').append(
+										$('<input type="text" class="m-wrap small" disabled/>')
+												.attr({"name": item['name'],"value":item['value']}))
+															.append(
+										$('<input type="hidden" name="type" value="single"/>'))
+															.append(
+										$('<input type="hidden" name="key" value="'+key+'"/>'))
+															.append(
+										$('<span class="help-inline"/>')));
+						/* var $span3=$('<div class="span3"/>');
+						if((k+1)%2==0){
+							$span3.prepend($controlGroup)
+							$row.prepend($span3);
+						}else{
+							$row=$('<div class="row-fluid"/>')
+							$span3.prepend($controlGroup);
+							$row.prepend($span3);
+							$form.prepend($row);
+						}
+ 						*/
+						$form.prepend($controlGroup);
+					}
+				});
+				
+				//编辑
+				$div.find('.actions a').click(function(){
+					$form.find('input').each(function(){
+						$(this).removeAttr("disabled");
+					});
+					$form.find('button').show();
+				});
+				
+				//确定
+				$form.find('button[type="submit"]').click(function(){
+					console.log($form);
+				});
+				
+				//取消
+				$form.find('button[type="button"]').click(function(){
+				    $form.find('input').each(function(){
+						$(this).attr("disabled","disabled");
+					});
+				    $form.find('button').hide();
+				});
+			};
+			
+		});
+	</script>
+
+
+
+	<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

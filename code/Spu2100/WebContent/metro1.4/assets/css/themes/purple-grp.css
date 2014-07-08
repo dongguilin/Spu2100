@@ -1,0 +1,100 @@
+/***
+purple theme 紫色
+这个样式中声明了GRP系统中特定的样式，每一种皮肤都有一个对应的样式文件，命名方式：皮肤颜色-grp.css
+***/
+
+/* 自动颜色 auto-color，用于portlet */
+
+.portlet.auto-color .portlet-title div.caption, .portlet-title.auto-color div.caption
+{
+  color: #fff;
+}
+
+.portlet.box.auto-color .portlet-title div.caption > i{
+  color: #fff;
+}
+
+.portlet-body.auto-color, .portlet.auto-color {
+  background-color: #4b8df8 !important;
+}
+
+.portlet.solid.auto-color .portlet-title,
+.portlet.solid.auto-color .portlet-title i,
+.portlet.solid.auto-color .portlet-body {
+  border: 0;
+  color: #fff;
+}
+
+.portlet.box.auto-color .portlet-title {
+  background-color: #701584;
+}
+
+.portlet.box.auto-color {  
+   border: 1px solid #B348CB;
+   border-top: 0;
+}
+
+.dashboard-stat.auto-color {
+  background-color: #27a9e3;
+}
+
+.dashboard-stat.auto-color .more { 
+  background-color: #208dbe;
+}
+
+/* 在tab中的切换标签*/
+a.auto-color{
+	color:#fff;
+}
+a.auto-color:hover{
+	color:#555;
+}
+
+/* begin:通过列表或菜单树管理业务对象时，右侧操作功能区的样式 */
+.tree-selected{
+	color:#B348CB !important;
+}
+
+.btn.selected {
+     background-color: #852B99;
+    color: white;
+    text-shadow: none;
+}
+.btn.selected:hover, .btn.selected:focus, .btn.selected:active, .btn.selected.active, .btn.selected.disabled, .btn.selected[disabled] {
+    background-color: #6D1B81 !important;
+    color: #FFFFFF !important;
+}
+
+/* 增加portlet展示类型：light  */
+
+.portlet.light  .portlet-title{
+	border-bottom:1px solid #6D1B81 !important;
+}
+.portlet.light  .portlet-title div.caption i{
+	color: #6D1B81 !important;
+}
+
+.portlet.no-box .portlet-title{
+	padding-top:5px !important;
+	border-bottom:1px solid #6D1B81 !important;
+}
+
+.portlet.no-box .portlet-title div.caption i{
+	color: #6D1B81 !important;
+}
+
+
+/***
+功能导航主页面背景
+***/
+
+.app_main-bg{
+	background:url(./images/purple-bg.jpg)  repeat;
+}
+
+/***
+功能导航主页面标题颜色
+***/
+.app_main-title{
+	color:white !important;
+}
