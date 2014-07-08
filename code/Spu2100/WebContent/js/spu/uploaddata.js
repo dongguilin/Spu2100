@@ -53,27 +53,25 @@ var Uploaddata = function() {
 					"False":"否"
 			};
 			
-			//最后一个JCL编号
-			var lastJCL="";
-			
 			//根据json数据填充JCL表格
 			function initJCLTable(data){
 				var $tbody = $("#JCL").find("tbody").empty();
 				for ( var num in data) {
 					var $tr = $('<tr>');
-					$tr.append($('<td>').text(num));
-					lastJCL=num;
+					$tr.append($('<td>').text(num).attr("title","key").attr("val",num));
 					var items = data[num];
 					$.each(items,function(name,value){
+						var showtext=value;
 						if(name=="calcMethord"){
-							value=JCL_calcMethord[value];
+							showtext=JCL_calcMethord[value];
 						}else if(name=="monitorUnit"){
-							value=JCL_monitorUnit[value];
+							showtext=JCL_monitorUnit[value];
 						}else if(name=="Uploading"){
-							value=JCL_boolean[value];
+							showtext=JCL_boolean[value];
 						}
-						$tr.append($('<td>').text(value));
+						$tr.append($('<td>').text(showtext).attr("title",name).attr("val",value));
 					});
+					$tr.append($('<td><a title="edit" href="javascript:;"><i class="icon-edit"></i>编辑</a></td>'));
 					$tbody.append($tr);
 				}
 			}
@@ -97,31 +95,32 @@ var Uploaddata = function() {
 					for ( var i in items) {
 						$tr.append($('<td>').text(items[i]));
 					}
+					$tr.append($('<td><a title="edit" href="javascript:;"><i class="icon-edit"></i>编辑</a></td>'));
 					$tbody.append($tr);
 				}
 			}
 			
-			//新增JCL
-			$('#add_JCL').live('click',function(){
+			//编辑JCL
+			$('#JCL_info').find("a[title='edit']").live('click',function(){
 				$('#JCL_info').hide();
-				$('#JCL_form').show();
-				
-				var num=lastJCL.substring(3, lastJCL.length);
-				num=parseInt(num)+1;
-				
-				$("#JCL_form").find("input[name='key']").first().val("JCL"+num);
-				$("#JCL_form").find("input[name='MonitorCount']").first().val(num+1);
+				var $form=$('#JCL_form');
+				$form.show();
+				var $tds=$(this).parents('tr:first').find('td');
+				for(var i=0;i<$tds.length-1;i++){
+					var $td=$($tds[i]);
+					$("#"+$td.attr("title")).val($td.attr("val"));
+				}
 				
 			});
 			
 			//保存
 			$('#ok').click(function(){
-				var url="../SetupConfServlet?operation=add&";
+				var url="../SetupConfServlet?operation=update";
 				var data=$('#JCL_form').find("form").serialize();
 				var key=$("#JCL_form").find("input[name='key']").first().val();
-				var MonitorCount=$("#JCL_form").find("input[name='MonitorCount']").first().val();
-				url=url+"key="+key+"&"+data+"&MonitorCount"+MonitorCount;
-				$.get(url,function(data){
+//				var MonitorCount=$("#JCL_form").find("input[name='MonitorCount']").first().val();
+//				url=url+"key="+key+"&"+data+"&MonitorCount"+MonitorCount;
+				$.post(url,data,function(data){
 					console.log(data);
 				},"json");
 				
