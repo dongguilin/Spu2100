@@ -5,7 +5,7 @@
 <!-- BEGIN HEAD -->
 <head>
 	<meta charset="utf-8" />
-	<title>Spu2100 | 模拟通道配置</title>
+	<title>SPU2100采集装置  | 模拟通道配置</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -33,7 +33,7 @@
 			<div class="container-fluid">
 				<!-- BEGIN LOGO -->
 				<a class="brand" href="index.html">
-				&nbsp;&nbsp;<strong>Spu2100</strong>&nbsp;&nbsp;<small>monitor</small>
+				&nbsp;&nbsp;<strong>SPU2100采集装置</strong>
 				</a>
 				<!-- END LOGO -->
 				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -88,18 +88,37 @@
 					<!-- END RESPONSIVE QUICK SEARCH FORM -->
 				</li>
 				
-				<li class="start">
-					<a href="../index.html">
-					<i class="icon-home"></i> 
-					<span class="title">设置向导</span>
-					<span class="selected"></span>
+				<li>
+					<a href="version_info.html">
+						<span class="title">运行状态管理</span>
+						<span class="arrow"></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="version_info.html">版本信息</a>
+						</li>
+						<li>
+							<a href="tcpnet_info.html">TCP网络信息</a>
+						</li>
+						<li>
+							<a href="#">串口信息</a>
+						</li>
+						<li>
+							<a href="#">软件运行信息</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li>
+					<a href="javascript:;">
+						<span class="title">设置向导</span>					
 					</a>
 				</li>
-
+			
 				<li class="active">
 					<a>
 						<i></i> 
-						<span class="title">配置文件管理</span>
+						<span class="title">配置管理</span>
 						<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
@@ -109,8 +128,8 @@
 							<span class="arrow"></span>
 							</a>
 							<ul class="sub-menu">
-								<li><a href="deviceinfo.html">IP地址及端口信息配置</a></li>
-								<li><a href="serial.html">串口通讯配置</a></li>
+								<li><a href="deviceinfo.html">IP地址及端口信息</a></li>
+								<li><a href="serial.html">串口通讯</a></li>
 							</ul>
 						</li>
 						<li class="active">
@@ -121,7 +140,7 @@
 							<ul class="sub-menu">
 								<li class="active"><a href="setup_ad.html">模拟通道配置</a></li>
 								<li><a href="io.html">开关通道配置</a></li>
-								<li><a href="zhtzz.html">综合特征值配置</a></li>
+								<li><a href="uploaddata.html">上传数据配置</a></li>
 							</ul>
 						</li>
 						<li>
@@ -131,14 +150,13 @@
 							</a>
 							<ul class="sub-menu">
 								<li><a href="#">报警输出配置</a></li>
-								<li><a href="#">报警通道测试</a></li>
 							</ul>
 						</li>
 					</ul>
 				</li>
 				
 				<li>
-					<a href="#">
+					<a href="javascript:;">
 						<i></i> 
 						<span class="title">数据查看</span>
 						<span class="arrow "></span>
@@ -146,20 +164,6 @@
 					<ul class="sub-menu">
 						<li><a href="#"> 点值数据展示</a></li>
 						<li><a href="#"> 波形数据展示</a></li>
-					</ul>
-				</li>
-				
-				<li>
-					<a href="javascript:;">
-						<i></i> 
-						<span class="title">运行状态管理</span>
-						<span class="arrow "></span>
-					</a>
-					<ul class="sub-menu">
-						<li><a href="version_info.html">版本信息</a></li>
-						<li><a href="ipport_info.html">IP地址及端口信息状态查看</a></li>
-						<li><a href="#"> 串口通信状态信息</a></li>
-						<li><a href="#"> 软件运行时间</a></li>
 					</ul>
 				</li>
 				
@@ -171,18 +175,18 @@
 					</a>
 					<ul class="sub-menu">
 						<li><a href="channel_config.html">通道标定</a></li>
-						<li><a href="config_fileupload.html">备份和载入配置 </a></li>
+						<li><a href="#">报警通道测试</a></li>
+						<li><a href="backupandloadconfig.html">备份和载入配置 </a></li>
 						<li><a href="#">软件升级</a></li>
-						<li><a href="user_manager.html">用户管理</a></li>
 						<li><a href="log.html">系统日志 </a></li>
 						<li><a href="#">数据统计 </a></li>
 						<li><a href="#">重启系统 </a></li>
-						<li><a href="#">恢复备份设置 </a></li>
 						<li><a href="#">诊断工具</a></li>
+						<li><a href="user_manager.html">用户管理</a></li>
 					</ul>
 				</li>
 				
-			</ul>
+			</ul>   
 			<!-- END SIDEBAR MENU -->
 		</div>
 		<!-- END SIDEBAR -->
@@ -203,11 +207,6 @@
 						</h3>
 						<ul class="breadcrumb">
 							<li>
-								<i class="icon-home"></i>
-								<a href="../index.html">主页</a> 
-								<i class="icon-angle-right"></i>
-							</li>
-							<li>
 								<a href="javascript:;">配置文件管理</a>
 								<i class="icon-angle-right"></i>
 							</li>
@@ -223,30 +222,110 @@
 				<!-- END PAGE HEADER-->
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row-fluid">
-					<div class="span12">
-						<!-- BEGIN Portlet PORTLET-->
+					<div class="span12" id="AD">
 						<div class="portlet box blue">
 							<div class="portlet-title">
 								<div class="caption"><i class="icon-edit"></i>模拟通道配置</div>
-							</div>	
-							<div class="portlet-body">
-								<div style="overflow-x: auto; overflow-y: auto;">
-									<table class="table table-striped table-hover table-bordered" id="ad_table">
-										<thead>
-											<tr>
-												<th>通道编号</th>
-												<th>传感器斜率</th>
-												<th>传感器截距</th>
-												<th>操作</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
+								<div class="actions">
+									<a class="btn green" href="javascript:;" id="edit">
+										<i class="icon-pencil"></i>编辑
+									</a>
 								</div>
 							</div>
+							<div class="portlet-body">
+								<h3 >通道
+									<select id="AD_key" class="small m-wrap">
+									</select>
+								</h3>
+								<form class="form-horizontal">
+									<div class="control-group">
+										<label class="control-label">是否启用</label>
+										<div class="controls">
+											<select class="small m-wrap" name="isconfig">		
+													<option value="True">是</option>
+													<option value="False">否</option>
+											</select>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">单位</label>
+										<div class="controls">
+											<input name="MonitorUnit" type="text" class="m-wrap small">
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">传感器ADK</label>
+										<div class="controls">
+											<input name="sensorK" type="text" class="m-wrap small">
+											<span class="help-inline"></span>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">传感器ADB</label>
+										<div class="controls">
+											<input name="sensorB" type="text" class="m-wrap small">
+											<span class="help-inline"></span>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">50HZ陷波</label>
+										<div class="controls">
+											<select class="small m-wrap" name="is50HZ">		
+												<option value="True">是</option>
+												<option value="False">否</option>
+											</select>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">0.7低阻</label>
+										<div class="controls">
+											<select class="small m-wrap" name="is07HZ">		
+												<option value="True">是</option>
+												<option value="False">否</option>
+											</select>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">200高阻</label>
+										<div class="controls">
+											<select class="small m-wrap" name="is200HZ">		
+												<option value="True">是</option>
+												<option value="False">否</option>
+											</select>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">1000高阻</label>
+										<div class="controls">
+											<select class="small m-wrap" name="is1000HZ">		
+												<option value="True">是</option>
+												<option value="False">否</option>
+											</select>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">数值积分（位移/速度）</label>
+										<div class="controls">
+											<select class="small m-wrap" name="iscalculus">		
+												<option value="True">是</option>
+												<option value="False">否</option>
+											</select>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">气息参数</label>
+										<div class="controls">
+											<input name="qxpara" type="text" class="m-wrap small">
+											<span class="help-inline"></span>
+										</div>
+									</div>
+									<div class="form-actions" hidden="true">
+										<button id="save" type="button" class="btn blue"><i class="icon-ok"></i> 保存</button>
+										<button id="cancel" type="button" class="btn">取消</button>
+									</div>
+								</form>
+							</div>
 						</div>
-						<!-- END Portlet PORTLET-->
 					</div>
 				</div>
 				<!-- END PAGE CONTENT-->
@@ -259,7 +338,7 @@
 	<!-- BEGIN FOOTER -->
 	<div class="footer">
 		<div class="footer-inner">
-			2014 &copy; Spu2100.
+			2014 &copy; 北京奥技异科技发展有限公司 .
 		</div>
 		<div class="footer-tools">
 			<span class="go-top">
@@ -289,14 +368,13 @@
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../metro1.4/assets/scripts/app.js"></script>
 	<script src="../js/spu/common.js"></script>
-	<script src="../js/spu/setup_ad.js"></script>
-	
+	<script src="../js/spu/ad.js"></script>
 	<!-- END PAGE LEVEL SCRIPTS -->  
 	<script>
 		jQuery(document).ready(function() {    
 		   App.init();
 		   Common.init();
-		   SetupAD.init();
+		   AD.init();
 		});
 	</script>
 	<!-- END JAVASCRIPTS -->
