@@ -54,7 +54,7 @@ var Login = function () {
          		   data: data,
          		   success: function(data){
          		     if(data.success==true){
-         		    	 window.location.assign("../index.html");
+         		    	 window.location.assign("version_info.html");
          		     }else if(data['success']==false){
          		    	$('.alert-error span').text(data.msg);
          		    	$('.alert-error').show();
