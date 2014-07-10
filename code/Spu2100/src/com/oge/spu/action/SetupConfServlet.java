@@ -69,20 +69,32 @@ public class SetupConfServlet extends HttpServlet {
 	}
 	
 	private void add(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		@SuppressWarnings("unchecked")
-		Map<String,String> map=request.getParameterMap();
 		Map<String,String> itemMap=new LinkedHashMap<String, String>();
 		
-		Iterator<String> iter=map.keySet().iterator();
-		while(iter.hasNext()){
-			String key=iter.next();
-			itemMap.put(key, request.getParameter(key));
+		String key=request.getParameter("key");
+		if(key.startsWith("JCL")){
+			itemMap.put("monitorName", request.getParameter("monitorName"));
+			itemMap.put("calcMethord", request.getParameter("calcMethord"));
+			itemMap.put("DataSource", request.getParameter("DataSource"));
+			itemMap.put("monitorUnit", request.getParameter("monitorUnit"));
+			itemMap.put("MinValue", request.getParameter("MinValue"));
+			itemMap.put("MaxValue",request.getParameter("MaxValue"));
+			itemMap.put("Uploading",request.getParameter("Uploading"));
+			itemMap.put("Upsequence", request.getParameter("Upsequence"));
+			itemMap.put("UploadTime",request.getParameter("UploadTime"));
+			itemMap.put("Upbdong", request.getParameter("Upbdong"));
+			itemMap.put("MonitorCount", request.getParameter("MonitorCount"));
+		}else if(key.startsWith("BX")){
+			itemMap.put("DataSource", request.getParameter("DataSource "));
+			itemMap.put("MonitorFunction", request.getParameter("MonitorFunction"));
+			itemMap.put("Uploading", request.getParameter("Uploading"));
+			itemMap.put("UpQxLoading", request.getParameter("UpQxLoading"));
+			itemMap.put("Upsequence", request.getParameter("Upsequence"));
+			itemMap.put("BxCylc",request.getParameter("BxCylc"));
+			itemMap.put("BxPoint",request.getParameter("BxPoint"));
 		}
-		String key=itemMap.get("key");
-		itemMap.remove("operation");
-		itemMap.remove("key");
 		
-		boolean result=ConfigUtil.addConfig(key, itemMap);
+		boolean result=ConfigUtil.add(key, itemMap);
 		Map<String,Object> maps = new HashMap<String,Object>();
 		if(result){
 			maps.put("success", true);
@@ -122,7 +134,7 @@ public class SetupConfServlet extends HttpServlet {
 		itemMap.remove("key");
 		itemMap.remove("operation");
 		
-		boolean result=ConfigUtil.updateConfig(key, itemMap);
+		boolean result=ConfigUtil.updateConfig(key, map);
 		Map<String,Object> maps = new HashMap<String,Object>();
 		if(result){
 			maps.put("success", true);

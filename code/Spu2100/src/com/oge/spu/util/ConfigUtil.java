@@ -12,11 +12,12 @@ import java.io.OutputStreamWriter;
 import java.nio.channels.FileLock;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 
 import com.oge.spu.bean.Config;
 import com.oge.spu.bean.Item;
@@ -25,15 +26,15 @@ public class ConfigUtil {
 
 	private static File file = new File(ProUtil.getString("setup"));
 
-	public static void writeToConf(
-			Map<String, Map<String, String>> maps) throws Exception {
+	public static void writeToConf(Map<String, Map<String, String>> maps)
+			throws Exception {
 		BufferedWriter writer = null;
 		try {
-			FileOutputStream fos=new FileOutputStream(file);
+			FileOutputStream fos = new FileOutputStream(file);
 			writer = new BufferedWriter(new OutputStreamWriter(
 					new DataOutputStream(fos), "gb2312"));
-			FileLock lock=fos.getChannel().tryLock();
-			if(lock!=null){
+			FileLock lock = fos.getChannel().tryLock();
+			if (lock != null) {
 				Iterator<String> iter = maps.keySet().iterator();
 				while (iter.hasNext()) {
 					String key = iter.next();
@@ -120,6 +121,29 @@ public class ConfigUtil {
 		return result;
 	}
 
+	public static boolean add(String key, Map<String, String> items) {
+		boolean result = false;
+		List<Map<String, Map<String, String>>> list = loadAll2();
+		if (key.startsWith("JCL")) {
+			list.get(6).put(key, items);
+		} else if (key.startsWith("BX")) {
+			list.get(5).put(key, items);
+		}
+
+		Map<String, Map<String, String>> newMap = new LinkedHashMap<String, Map<String, String>>();
+		for (Map<String, Map<String, String>> map : list) {
+			newMap.putAll(map);
+		}
+
+		try {
+			writeToConf(newMap);
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	/**
 	 * 加载所有配置
 	 * 
@@ -130,7 +154,7 @@ public class ConfigUtil {
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(
-					new FileInputStream(file),"gb2312"));
+					new FileInputStream(file), "gb2312"));
 			String str = null;
 			Map<String, String> config = null;
 			while ((str = reader.readLine()) != null) {
@@ -161,12 +185,68 @@ public class ConfigUtil {
 		return result;
 	}
 
-	public static Map<String, Map<String, String>> load(String key){
-		Map<String, Map<String, String>> result = new LinkedHashMap<String, Map<String,String>>();
+	public static List<Map<String, Map<String, String>>> loadAll2() {
+		List<Map<String, Map<String, String>>> list = new LinkedList<Map<String, Map<String, String>>>();
+		list.add(load("GlobeRun"));
+		list.add(load("DeviceInfo"));
+		list.add(load("Serial"));
+		list.add(load("AD"));
+		list.add(load("IO"));
+		list.add(load("BX"));
+		list.add(load("JCL"));
+		list.add(load("LCD"));
+		list.add(loadNumber());
+		return list;
+	}
+
+	public static Map<String, Map<String, String>> loadNumber() {
+		Map<String, Map<String, String>> result = new LinkedHashMap<String, Map<String, String>>();
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(
-					new FileInputStream(file),"gb2312"));
+					new FileInputStream(file), "gb2312"));
+			String str = null;
+			String currentKey = null;
+			boolean flag = false;
+			while ((str = reader.readLine()) != null) {
+				if (str.startsWith("[")) {
+					String key = str.substring(1, str.length() - 1);
+					if (NumberUtils.isNumber(key)) {
+						flag = true;
+						Map<String, String> items = new LinkedHashMap<String, String>();
+						currentKey = key;
+						result.put(key, items);
+					}
+				} else if (flag) {
+					if (str.contains("=") && str.length() > 1) {
+						String[] strs = str.split("=");
+						String value = strs.length == 2 ? strs[1] : "";
+						result.get(currentKey).put(strs[0], value);
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					reader = null;
+				}
+			}
+		}
+		return result;
+	}
+
+	public static Map<String, Map<String, String>> load(String key) {
+		Map<String, Map<String, String>> result = new LinkedHashMap<String, Map<String, String>>();
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new InputStreamReader(
+					new FileInputStream(file), "gb2312"));
 			String str = null;
 			String currentKey = null;
 			boolean flag = false;
@@ -175,7 +255,7 @@ public class ConfigUtil {
 					String temp = "[" + key;
 					if (str.startsWith(temp)) {
 						flag = true;
-						Map<String,String> items=new LinkedHashMap<String,String>();
+						Map<String, String> items = new LinkedHashMap<String, String>();
 						String name = str.substring(1, str.length() - 1);
 						currentKey = name;
 						result.put(name, items);
@@ -205,7 +285,7 @@ public class ConfigUtil {
 		}
 		return result;
 	}
-	
+
 	public static Map<String, Config> loadConfigs(String key) {
 		Map<String, Config> result = new LinkedHashMap<String, Config>();
 		if (StringUtils.isEmpty(key)) {
@@ -214,7 +294,7 @@ public class ConfigUtil {
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(
-					new FileInputStream(file),"gb2312"));
+					new FileInputStream(file), "gb2312"));
 			String str = null;
 			String currentKey = null;
 			boolean flag = false;
@@ -272,7 +352,7 @@ public class ConfigUtil {
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(
-					new FileInputStream(file),"gb2312"));
+					new FileInputStream(file), "gb2312"));
 			String str = null;
 
 			while ((str = reader.readLine()) != null) {
@@ -305,5 +385,5 @@ public class ConfigUtil {
 		}
 		return result;
 	}
-	
+
 }

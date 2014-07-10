@@ -3,10 +3,10 @@ var Uploaddata = function() {
 	return {
 		init : function() {
 			
-			var url="../SetupConfServlet";
+			var baseurl="../SetupConfServlet";
 			
 			//请求JCL数据
-			$.post(url, {
+			$.post(baseurl, {
 				"operation" : "query",
 				"key" : "JCL",
 				"type" : "multi"
@@ -53,12 +53,19 @@ var Uploaddata = function() {
 					"False":"否"
 			};
 			
+			//最后一个JCL编号
+			var lastJCL="";
+			
+			//新增或修改的标志
+			var JCL_flag="";
+			
 			//根据json数据填充JCL表格
 			function initJCLTable(data){
 				var $tbody = $("#JCL").find("tbody").empty();
 				for ( var num in data) {
 					var $tr = $('<tr>');
 					$tr.append($('<td>').text(num).attr("title","key").attr("val",num));
+					lastJCL=num;
 					var items = data[num];
 					$.each(items,function(name,value){
 						var showtext=value;
@@ -76,8 +83,24 @@ var Uploaddata = function() {
 				}
 			}
 			
+			//新增JCL
+			$('#add_JCL').live('click',function(){
+				JCL_flag="add";
+				$('#JCL_info').hide();
+				$('#JCL_form').show();
+				$('#JCL_form').find('form')[0].reset();
+				
+				var num=lastJCL.substring(3, lastJCL.length);
+				num=parseInt(num)+1;
+				
+				$("#JCL_form").find("input[name='key']").first().val("JCL"+num);
+				$("#JCL_form").find("input[name='MonitorCount']").first().val(num+1);
+				
+			});
+			
 			//编辑JCL
 			$('#JCL_info').find("a[title='edit']").live('click',function(){
+				JCL_flag="update";
 				$('#JCL_info').hide();
 				var $form=$('#JCL_form');
 				$form.show();
@@ -92,12 +115,11 @@ var Uploaddata = function() {
 			//保存
 			$('#JCL_form').find("button:first").click(function(){
 				var data=$('#JCL_form').find("form").serialize();
-				var key=$("#JCL_form").find("input[name='key']").first().val();
-				$.post("../SetupConfServlet?operation=update",data,function(data){
+				$.post(baseurl+"?operation="+JCL_flag,data,function(data){
 					alert(data.msg);
 					if(data.success==true){
 						//请求JCL数据
-						$.post(url, {
+						$.post(baseurl, {
 							"operation" : "query",
 							"key" : "JCL",
 							"type" : "multi"
@@ -108,7 +130,6 @@ var Uploaddata = function() {
 						$("#JCL_info").show();
 					}
 				},"json");
-				
 			});
 			
 			//取消
@@ -119,7 +140,7 @@ var Uploaddata = function() {
 			});
 			
 			//请求BX数据
-			$.post(url, {
+			$.post(baseurl, {
 				"operation" : "query",
 				"key" : "BX",
 				"type" : "multi"
@@ -133,10 +154,17 @@ var Uploaddata = function() {
 					"1":"气隙"
 			};
 			
+			//最后一个BX编号
+			var lastBX="";
+			
+			//新增或修改的标志
+			var BX_flag="";
+			
 			//根据json数据填充BX表格
 			function initBXTable(data){
 				var $tbody = $("#BX").find("tbody").empty();
 				for ( var num in data) {
+					lastBX=num;
 					var $tr = $('<tr>');
 					$tr.append($('<td>').text(num).attr("title","key").attr("val",num));
 					var items = data[num];
@@ -151,6 +179,20 @@ var Uploaddata = function() {
 					$tbody.append($tr);
 				}
 			}
+			
+			//新增BX
+			$('#add_BX').live('click',function(){
+				BX_flag="add";
+				$('#BX_info').hide();
+				$('#BX_form').show();
+				$('#BX_form').find('form')[0].reset();
+				
+				var num=lastBX.substring(2, lastBX.length);
+				console.log(num);
+				num=parseInt(num)+1;
+				
+				$("#BX_form").find("input[name='key']").first().val("BX"+num);
+			});
 			
 			//编辑BX
 			$('#BX_info').find("a[title='edit']").live('click',function(){
@@ -167,12 +209,11 @@ var Uploaddata = function() {
 			//保存BX
 			$('#BX_form').find("button:first").click(function(){
 				var data=$('#BX_form').find("form").serialize();
-				var key=$("#BX_form").find("input[name='key']").first().val();
-				$.post("../SetupConfServlet?operation=update",data,function(data){
+				$.post(baseurl+"?operation="+BX_flag,data,function(data){
 					alert(data.msg);
 					if(data.success==true){
-						//请求JCL数据
-						$.post(url, {
+						//请求BX数据
+						$.post(baseurl, {
 							"operation" : "query",
 							"key" : "BX",
 							"type" : "multi"

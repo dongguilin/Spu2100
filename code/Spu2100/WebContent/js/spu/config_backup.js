@@ -16,7 +16,7 @@ var ConfigBackup = function() {
 						
 						var href="../BackupConfServlet?operation=download&key="+key+"&dir="+obj.dir+"&name="+obj.name;
 						$tr2=$('<td><a title="download"  href='+href+'><i class="icon-download"></i>下载</a>'
-								+'&nbsp;&nbsp;&nbsp;<a title="restore" href="javascript:;"><i class="icon-share-alt"></i>还原</a>'
+								+'&nbsp;&nbsp;&nbsp;<a title="restore" href="javascript:;"><i class="icon-share-alt"></i>还原到当前备份</a>'
 								+'&nbsp;&nbsp;&nbsp;<a title="delete" href="javascript:;"><i class="icon-trash"></i>删除</a></td>');
 						$tbody.append($tr.append($tr0).append($tr1).append($tr2));
 					});
