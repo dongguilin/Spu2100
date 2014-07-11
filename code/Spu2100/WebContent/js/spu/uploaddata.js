@@ -173,6 +173,7 @@ var Uploaddata = function() {
 						if(name=="MonitorFunction"){
 							showtext=BX_MonitorFunction[value];
 						}
+						console.log(value);
 						$tr.append($('<td>').text(showtext).attr("title",name).attr("val",value));
 					});
 					$tr.append($('<td><a title="edit" href="javascript:;"><i class="icon-edit"></i>编辑</a></td>'));
@@ -196,6 +197,7 @@ var Uploaddata = function() {
 			
 			//编辑BX
 			$('#BX_info').find("a[title='edit']").live('click',function(){
+				BX_flag="update";
 				$('#BX_info').hide();
 				var $form=$('#BX_form');
 				$form.show();
@@ -210,6 +212,7 @@ var Uploaddata = function() {
 			$('#BX_form').find("button:first").click(function(){
 				var data=$('#BX_form').find("form").serialize();
 				$.post(baseurl+"?operation="+BX_flag,data,function(data){
+					console.log(data);
 					alert(data.msg);
 					if(data.success==true){
 						//请求BX数据

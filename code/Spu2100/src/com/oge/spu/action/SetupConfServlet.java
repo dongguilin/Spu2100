@@ -70,7 +70,6 @@ public class SetupConfServlet extends HttpServlet {
 	
 	private void add(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		Map<String,String> itemMap=new LinkedHashMap<String, String>();
-		
 		String key=request.getParameter("key");
 		if(key.startsWith("JCL")){
 			itemMap.put("monitorName", request.getParameter("monitorName"));
@@ -93,7 +92,6 @@ public class SetupConfServlet extends HttpServlet {
 			itemMap.put("BxCylc",request.getParameter("BxCylc"));
 			itemMap.put("BxPoint",request.getParameter("BxPoint"));
 		}
-		
 		boolean result=ConfigUtil.add(key, itemMap);
 		Map<String,Object> maps = new HashMap<String,Object>();
 		if(result){
@@ -134,7 +132,7 @@ public class SetupConfServlet extends HttpServlet {
 		itemMap.remove("key");
 		itemMap.remove("operation");
 		
-		boolean result=ConfigUtil.updateConfig(key, map);
+		boolean result=ConfigUtil.updateConfig(key, itemMap);
 		Map<String,Object> maps = new HashMap<String,Object>();
 		if(result){
 			maps.put("success", true);
