@@ -1,29 +1,25 @@
 package com.oge.spu.action;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import jodd.io.FileUtil;
+import net.sf.json.JSONObject;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.IOUtils;
-import org.imgscalr.Scalr;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.oge.spu.util.ProUtil;
 
@@ -32,7 +28,7 @@ import com.oge.spu.util.ProUtil;
  */
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -61,36 +57,56 @@ public class UploadServlet extends HttpServlet {
 
 		ServletFileUpload uploadHandler = new ServletFileUpload(
 				new DiskFileItemFactory());
-		PrintWriter writer = response.getWriter();
-		response.setContentType("application/json");
-		JSONArray json = new JSONArray();
+		response.setContentType("text/html;charset=utf-8");
+		Map<String, Object> maps = new HashMap<String, Object>();
+		boolean result = false;
 		try {
 			List<FileItem> items = uploadHandler.parseRequest(request);
 			for (FileItem item : items) {
 				if (!item.isFormField()) {
-					File file = new File(ProUtil.getString("upload_path")+item.getName());
-					item.write(file);
-//					JSONObject jsono = new JSONObject();
-//					jsono.put("name", item.getName());
-//					jsono.put("size", item.getSize());
-//					jsono.put("url", "UploadServlet?getfile=" + item.getName());
-//					jsono.put("thumbnail_url",
-//							"UploadServlet?getthumb=" + item.getName());
-//					jsono.put("delete_url",
-//							"UploadServlet?delfile=" + item.getName());
-//					jsono.put("delete_type", "GET");
-//					json.put(jsono);
+					handleUpload(item);
+					result=true;
 				}
 			}
 		} catch (FileUploadException e) {
 			throw new RuntimeException(e);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
-		} finally {
-//			writer.write(json.toString());
-			writer.close();
 		}
-
+		
+		maps.put("success", result);
+		if (result) {
+			maps.put("msg", "上传成功！");
+		} else {
+			maps.put("msg", "上传失败！");
+		}
+		String data = JSONObject.fromObject(maps).toString();
+		response.getWriter().write(data);
+		response.getWriter().flush();
 	}
-	
+
+	private void handleUpload(FileItem item) throws Exception {
+		String pattern = "yyyyMMddHHmm";
+		SimpleDateFormat format = new SimpleDateFormat(pattern);
+		String dirname = format.format(new Date());
+
+		if (item.getName().equals("setup.conf")) {
+			File src = new File(ProUtil.getString("setup"));
+			File dest = new File(ProUtil.getString("setup_backup")
+					+ File.separator + dirname + File.separator
+					+ item.getName());
+			FileUtil.copy(src, dest);
+			File file = new File(ProUtil.getString("setup"));
+			item.write(file);
+		} else if (item.getName().equals("channel.conf")) {
+			File src = new File(ProUtil.getString("channel"));
+			File dest = new File(ProUtil.getString("channel_backup")
+					+ File.separator + dirname + File.separator
+					+ item.getName());
+			FileUtil.copy(src, dest);
+			File file = new File(ProUtil.getString("channel"));
+			item.write(file);
+		}
+	}
+
 }

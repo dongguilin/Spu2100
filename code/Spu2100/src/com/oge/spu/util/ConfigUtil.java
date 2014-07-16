@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -100,20 +101,26 @@ public class ConfigUtil {
 		}
 		return result;
 	}
-
-	public static boolean addConfig(String key, Map<String, String> items) {
+	
+	public static boolean addJCL(String key, Map<String, String> items) {
 		boolean result = false;
-		Map<String, Map<String, String>> maps = loadAll();
-		Map<String, String> map = new LinkedHashMap<String, String>();
-		Iterator<String> iter = items.keySet().iterator();
-		while (iter.hasNext()) {
-			String keyStr = iter.next();
-			String valueStr = items.get(keyStr);
-			map.put(keyStr, valueStr);
+		List<Map<String, Map<String, String>>> list = loadAllForAdd();
+		Map<String, Map<String, String>> jclMap=list.get(6);
+		Set<Map.Entry<String,Map<String,String>>> jclset=jclMap.entrySet();
+		Iterator<Map.Entry<String,Map<String,String>>> iterator=jclset.iterator();
+		while(iterator.hasNext()){
+			Map.Entry<String,Map<String,String>> entry=iterator.next();
+			Map<String,String> map=entry.getValue();
+			map.put("MonitorCount", items.get("MonitorCount"));
 		}
-		maps.put(key, map);
+		jclMap.put(key, items);
+
+		Map<String, Map<String, String>> newMap = new LinkedHashMap<String, Map<String, String>>();
+		for (Map<String, Map<String, String>> map : list) {
+			newMap.putAll(map);
+		}
 		try {
-			writeToConf(maps);
+			writeToConf(newMap);
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -121,14 +128,10 @@ public class ConfigUtil {
 		return result;
 	}
 
-	public static boolean add(String key, Map<String, String> items) {
+	public static boolean addBX(String key, Map<String, String> items) {
 		boolean result = false;
-		List<Map<String, Map<String, String>>> list = loadAll2();
-		if (key.startsWith("JCL")) {
-			list.get(6).put(key, items);
-		} else if (key.startsWith("BX")) {
-			list.get(5).put(key, items);
-		}
+		List<Map<String, Map<String, String>>> list = loadAllForAdd();
+		list.get(5).put(key, items);
 
 		Map<String, Map<String, String>> newMap = new LinkedHashMap<String, Map<String, String>>();
 		for (Map<String, Map<String, String>> map : list) {
@@ -185,7 +188,7 @@ public class ConfigUtil {
 		return result;
 	}
 
-	public static List<Map<String, Map<String, String>>> loadAll2() {
+	public static List<Map<String, Map<String, String>>> loadAllForAdd() {
 		List<Map<String, Map<String, String>>> list = new LinkedList<Map<String, Map<String, String>>>();
 		list.add(load("GlobeRun"));
 		list.add(load("DeviceInfo"));
@@ -267,58 +270,6 @@ public class ConfigUtil {
 						String[] strs = str.split("=");
 						String value = strs.length == 2 ? strs[1] : "";
 						result.get(currentKey).put(strs[0], value);
-					}
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} finally {
-					reader = null;
-				}
-			}
-		}
-		return result;
-	}
-
-	public static Map<String, Config> loadConfigs(String key) {
-		Map<String, Config> result = new LinkedHashMap<String, Config>();
-		if (StringUtils.isEmpty(key)) {
-			return result;
-		}
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new InputStreamReader(
-					new FileInputStream(file), "gb2312"));
-			String str = null;
-			String currentKey = null;
-			boolean flag = false;
-			while ((str = reader.readLine()) != null) {
-				if (str.startsWith("[")) {
-					String temp = "[" + key;
-					if (str.startsWith(temp)) {
-						flag = true;
-						Config cf = new Config();
-						String name = str.substring(1, str.length() - 1);
-						cf.setName(name);
-						currentKey = name;
-						result.put(name, cf);
-						System.out.println(name);
-					} else {
-						flag = false;
-					}
-				} else if (flag) {
-					if (str.contains("=") && str.length() > 1) {
-						String[] strs = str.split("=");
-						String value = strs.length == 2 ? strs[1] : "";
-						result.get(currentKey).getItems()
-								.add(new Item(strs[0], "", value));
-						System.out.println(strs[0] + "=" + value);
 					}
 				}
 			}

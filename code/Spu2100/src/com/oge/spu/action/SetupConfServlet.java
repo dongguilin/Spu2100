@@ -92,7 +92,12 @@ public class SetupConfServlet extends HttpServlet {
 			itemMap.put("BxCylc",request.getParameter("BxCylc"));
 			itemMap.put("BxPoint",request.getParameter("BxPoint"));
 		}
-		boolean result=ConfigUtil.add(key, itemMap);
+		boolean result=false;
+		if(key.startsWith("JCL")){
+			result = ConfigUtil.addJCL(key, itemMap);
+		}else if(key.startsWith("BX")){
+			result = ConfigUtil.addBX(key, itemMap);
+		}
 		Map<String,Object> maps = new HashMap<String,Object>();
 		if(result){
 			maps.put("success", true);
