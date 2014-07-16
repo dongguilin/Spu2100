@@ -14,9 +14,7 @@ public class ProUtil {
 		try {
 			proConfiguration.load(new File(ProUtil.class.getResource(
 					"/global.properties").getPath()));
-			proConfiguration.load(new File(ProUtil.class.getResource(
-					"/setup.properties").getPath()));
-
+			
 			proConfiguration.load(new File(proConfiguration.getString(
 					"ifcfg-eth0", "/etc/sysconfig/network-scrips/ifcfg-eth0")));
 			
@@ -32,17 +30,6 @@ public class ProUtil {
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void main(String[] args) throws Exception {
-		String setupPath = "d:/setup.properties";
-		PropertiesConfiguration pc = new PropertiesConfiguration();
-		pc.setAutoSave(true);
-		File file = new File(setupPath);
-		pc.load(file);
-		pc.setProperty("hello", "world1");
-		pc.save(file);
-
 	}
 
 	public static PropertiesConfiguration getProConfiguration() {

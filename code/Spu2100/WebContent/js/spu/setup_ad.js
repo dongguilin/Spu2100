@@ -1,154 +1,123 @@
-var SetupAD = function() {
+var Setup_ad = function() {
 
 	return {
-		// main function to initiate the module
 		init : function() {
-			
-			var url="../SetupConfServlet";
 
-			$.post(url, {
+			// 存储json数据
+			var jsondata = {};
+
+			// 请求数据
+			$.post("../SetupConfServlet", {
 				"operation" : "query",
 				"key" : "AD",
 				"type" : "multi"
 			}, function(data) {
-				initTable(data);
-			},"json");
+				$('#AD_key').empty();
+				jsondata = data;
+				var i = 0;
+				for ( var config in data) {
+					$('#AD_key').append($('<option>').text(config));
+					// 填充表单
+					if (i == 0) {
+						// 选中第一个
+						$("#AD_key").first().attr("selected", "selected");
+						fillForm(jsondata[config]);
+						i++;
+					}
+				}
 
-			// 存储上次编辑对象，一次只能有一行为编辑状态
-			var lastEditObj = {
-				"isEdit" : false,
-				"tr" : null,
-				"data" : []
-			};
+			}, "json");
 
-			// 重置数据
-			function resetLastEditObj() {
-				lastEditObj["idEdit"] = false;
-				lastEditObj["tr"] = null;
-				lastEditObj["data"] = [];
-			}
+			// 下拉列表change事件
+			$('#AD_key').change(function() {
+				var key = $(this).val();
+				var items = jsondata[key];
+				fillForm(items);
+			});
 
-			// 根据后台返回的json数据初始化表格
-			function initTable(jsonObj) {
-				var $tbody = $('#ad_table').find('tbody').empty();
-				for ( var key in jsonObj) {
-					var itemsObj=jsonObj[key];
-        			var $tr=$('<tr>');
-        			$tr.append($('<td>').text(key))
-        				.append($('<td>').text(itemsObj["sensorK"]))
-        				.append($('<td>').text(itemsObj["sensorB"]))
-        				.append($('<td><a title="edit" href="javascript:;"><i class="icon-edit"></i>编辑</a></td>'));
-        			$tbody.append($tr);
+			// 填充表单数据
+			function fillForm(items) {
+				for ( var i in items) {
+					var name = i;
+					var value = items[i];
+					var $select = $("#AD form").find(
+							"select[name=" + name + "]");
+					$select.attr("disabled", "disabled");
+					$select.find('option[value="' + value + '"]').attr({
+						"selected" : "selected"
+					});
+					$("#AD form").find("input[name=" + name + "]").val(value)
+							.attr("disabled", "disabled");
 				}
 			}
 
-			// 编辑，使行进入编辑状态
-			$('#ad_table a[title="edit"]')
-					.live(
-							'click',
-							function(e) {
-								e.preventDefault();
+			// 取消
+			$('#cancel').live(
+					'click',
+					function() {
+						var key = $('#AD_key').val();
+						var items = jsondata[key];
+						fillForm(items);
 
-								var isEdit = lastEditObj["idEdit"];
-								if (isEdit == true) {
-									resetRow();
-								}
-								var $tr = $(this).parents('tr:first');
-								var $tds = $tr.find('td');
-								var data = [];
-								data.push($($tds[0]).text());
-								data.push($($tds[1]).text());
-								data.push($($tds[2]).text());
-								$tds[0].innerHTML = '<input type="text" class="m-wrap small" name="key" value="'
-										+ data[0] + '" disabled>';
-								$tds[1].innerHTML = '<input type="text" class="m-wrap small" name="sensorK" value="'
-										+ data[1] + '">';
-								$tds[2].innerHTML = '<input type="text" class="m-wrap small" name="sensorB" value="'
-										+ data[2] + '">';
-								$tds[3].innerHTML = '<a title="save"  href="javascript:;"><i class="icon-save"></i>保存</a>'
-										+ '&nbsp;&nbsp;&nbsp;<a title="cancel" href="javascript:;">取消</a>';
+						$("#AD form").find("select").attr("disabled",
+								"disabled");
+						$("#AD form").find("input")
+								.attr("disabled", "disabled");
+						$("#AD_key").removeAttr("disabled");
+						$('#AD .form-actions').hide();
+					});
 
-								lastEditObj["idEdit"] = true;
-								lastEditObj["tr"] = $tr;
-								lastEditObj["data"] = data;
-							});
-
-			// 取消编辑状态
-			$('#ad_table a[title="cancel"]').live('click', function(e) {
-				e.preventDefault();
-
-				resetRow();
+			// 编辑
+			$('#edit').live('click', function() {
+				$("#AD form").find("select").removeAttr("disabled");
+				$("#AD form").find("input").removeAttr("disabled");
+				$("#AD_key").attr("disabled", "disabled");
+				$('#AD .form-actions').show();
 			});
 
-			// 重置行内容
-			function resetRow() {
-
-				var $tr = lastEditObj["tr"];
-				var $tds = $tr.find('td');
-				var data = lastEditObj["data"];
-
-				$tds[0].innerHTML = '<td>' + data[0] + '</td>';
-				$tds[1].innerHTML = '<td>' + data[1] + '</td>';
-				$tds[2].innerHTML = '<td>' + data[2] + '</td>';
-				$tds[3].innerHTML = '<td><a title="edit" href="javascript:;"><i class="icon-edit"></i>编辑</a></td>';
-
-				resetLastEditObj();
-			}
-
 			// 保存
-			$('#ad_table a[title="save"]')
-					.live(
-							'click',
-							function(e) {
-								e.preventDefault();
+			$('#save').live(
+					'click',
+					function() {
+						var data = $('#AD form').serialize();
+						var key = $('#AD_key').val();
+						var array = data.split('&');
+						$.post('../SetupConfServlet?operation=update&key='
+								+ key, data, function(data) {
+							alert(data.msg);
+							if (data.success == true) {
+								// 请求数据
+								$.post("../SetupConfServlet", {
+									"operation" : "query",
+									"key" : "AD",
+									"type" : "multi"
+								}, function(data) {
+									$('#AD_key').empty();
+									jsondata = data;
+									var i = 0;
+									for ( var config in data) {
+										$('#AD_key').append(
+												$('<option>').text(config));
+										if(key==config){
+											$("#AD_key").find("option:contains('"+key+"')").attr("selected",
+											"selected");
+											fillForm(jsondata[config]);
+										}
+									}
 
-								var data = {
-									"operation" : "update"
-								};
-								var $tr = $(this).parents('tr:first');
-								var $inputs = $tr.find('input');
-								for (var i = 0; i < $inputs.length; i++) {
-									var name = $($inputs[i]).attr("name");
-									var value = $($inputs[i]).attr("value");
-									data[name] = value;
-								}
+								}, "json");
+							} else {
+								fillForm(jsondata[key]);
+							}
+							$("#AD form").find("select").attr("disabled",
+									"disabled");
+							$("#AD form").find("input").attr("disabled",
+									"disabled");
+							$("#AD_key").removeAttr("disabled");
+							$('#AD .form-actions').hide();
 
-								$
-										.post(
-												url,
-												data,
-												function(result) {
-													var obj = jQuery
-															.parseJSON(result);
-													alert(obj.msg);
-													if (obj.success == true) {
-														var $tds = $tr
-																.find('td');
-
-														$tds[0].innerHTML = '<td>'
-																+ $($inputs[0])
-																		.attr(
-																				"value")
-																+ '</td>';
-														$tds[1].innerHTML = '<td>'
-																+ $($inputs[1])
-																		.attr(
-																				"value")
-																+ '</td>';
-														$tds[2].innerHTML = '<td>'
-																+ $($inputs[2])
-																		.attr(
-																				"value")
-																+ '</td>';
-														$tds[3].innerHTML = '<td><a title="edit" href="javascript:;"><i class="icon-edit"></i>编辑</a></td>';
-
-													} else {
-														resetRow();
-													}
-													resetLastEditObj();
-												});
-
-							});
+						}, "json");
+					});
 
 		}
 	};

@@ -3,7 +3,6 @@ package com.oge.spu.service;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.Map;
 import jodd.io.FileUtil;
 
 import com.oge.spu.util.ProUtil;
-import com.oge.spu.util.ZipUtil;
 
 public class BackupConfService {
 
@@ -54,46 +52,6 @@ public class BackupConfService {
 			}
 		}
 		return result;
-	}
-
-	/**
-	 * 下载备份
-	 * 
-	 * @param key
-	 *            setup_backup/channel_backup
-	 * @param dirname
-	 *            备份文件夹名称
-	 * @param output
-	 *            输出流
-	 * @throws Exception 
-	 */
-	public void download(String key, File file, OutputStream output)
-			throws IOException {
-//		String path = ProUtil.getString(key) + File.separator + dirname;
-		ZipUtil.zip(file, output);
-//		File file = new File(path+"/setup.conf");
-//		System.out.println(file.getAbsolutePath());
-//		BufferedInputStream input = null;
-//		try {
-//			input = new BufferedInputStream(new FileInputStream(file));
-////			IOUtils.copy(input, output);
-//			byte[] buff=new byte[1000];
-//			int length=-1;
-//			while((length=input.read(buff))!=-1){
-//				output.write(buff,0,length);
-//			}
-//		} catch (IOException e) {
-//			throw e;
-//		} finally {
-//			if (input != null) {
-//				try {
-//					input.close();
-//				} catch (IOException e) {
-//					input = null;
-//					throw e;
-//				}
-//			}
-//		}
 	}
 
 	/**
