@@ -2,8 +2,6 @@ package com.oge.spu.action;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -13,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
-import com.oge.spu.util.ChannelConfUtil;
-import com.oge.spu.util.ConfigUtil;
+import com.oge.spu.service.ChannelConfigService;
 
 /**
  * Servlet implementation class ChannelConfServlet
  */
 public class ChannelConfServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private ChannelConfigService service = new ChannelConfigService();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -48,8 +46,7 @@ public class ChannelConfServlet extends HttpServlet {
 
 	private void query(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		Map<String, Map<String, String>> map = ChannelConfUtil.loadAll();
+		Map<String, Map<String, String>> map = service.queryAll();
 		String data = JSONObject.fromObject(map).toString();
 		response.getWriter().write(data);
 		response.getWriter().flush();
@@ -58,12 +55,9 @@ public class ChannelConfServlet extends HttpServlet {
 	private void update(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String key = request.getParameter("key");
-		Map<String, String> itemMap = new LinkedHashMap<String, String>();
-		itemMap.put("k", request.getParameter("k"));
-		itemMap.put("B", request.getParameter("B"));
-
-		boolean result = ChannelConfUtil.updateConfig(key, itemMap);
-
+		String kValue = request.getParameter("k");
+		String bValue = request.getParameter("B");
+		boolean result = service.update(key, kValue, bValue);
 		Map<String, Object> maps = new HashMap<String, Object>();
 		if (result) {
 			maps.put("success", true);
@@ -75,7 +69,6 @@ public class ChannelConfServlet extends HttpServlet {
 		String data = JSONObject.fromObject(maps).toString();
 		response.getWriter().write(data);
 		response.getWriter().flush();
-
 	}
 
 }
