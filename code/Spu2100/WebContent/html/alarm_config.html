@@ -223,25 +223,25 @@
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row-fluid">
 					<h3>报警通道
-									<select id="key" class="small m-wrap">
-										<option value="0">0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
-										<option value="13">13</option>
-										<option value="14">14</option>
-										<option value="15">15</option>
-									</select>
-								</h3>
+						<select id="key" name="key" class="small m-wrap">
+							<option value="0">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+						</select>
+					</h3>
 					<div class="row-fluid">
 						<div class="span8">
 							<div class="portlet box blue">
@@ -278,25 +278,19 @@
 										<div class="control-group">
 											<label class="control-label">监测量编号:</label>
 											<div class="controls">
-												<input name="key" id="BX_key" type="text" class="m-wrap small" readonly="readonly">
+												<input name="v1" id="v1" type="text" class="m-wrap small" readonly="readonly">
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">报警通道编号</label>
 											<div class="controls">
-												<select name="num">
-													<option value=""></option>
-													<option value=""></option>
-													<option value=""></option>
-													<option value=""></option>
-													<option value=""></option>
-												</select>
+												<input name="v2" id="v2" type="text" class="m-wrap small">
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">逻辑关系</label>
 											<div class="controls">
-												<select name="logic">
+												<select name="v3" id="v3">
 													<option value="0">大于0</option>
 													<option value="1">小于1</option>
 													<option value="2">等于2</option>
@@ -311,19 +305,19 @@
 										<div class="control-group">
 											<label class="control-label">第一值</label>
 											<div class="controls">
-												<input name="value1" type="text" class="m-wrap small">
+												<input name="v4" id="v4" type="text" class="m-wrap small">
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">第二值</label>
 											<div class="controls">
-												<input name="value2" type="text" class="m-wrap small">
+												<input name="v5" id="v5" type="text" class="m-wrap small">
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">持续时间</label>
 											<div class="controls">
-												<input name="time" type="text" class="m-wrap small">
+												<input name="v6" id="v6" type="text" class="m-wrap small">
 											</div>
 										</div>
 										<div class="form-actions">
@@ -352,7 +346,7 @@
 										<table class="table table-striped table-hover">
 											<thead>
 												<tr>
-													<th>类似</th>
+													<th>类型</th>
 													<th>描述</th>
 												</tr>
 											</thead>
