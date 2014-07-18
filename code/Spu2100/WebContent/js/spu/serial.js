@@ -50,6 +50,40 @@ var Serial = function() {
 								"disabled");
 						$('#' + key + ' .form-actions').hide();
 					});
+			
+			//修改成功提示窗口
+		    $("#dialog_updatesuccess").dialog({
+		      dialogClass: 'ui-dialog-blue',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //修改失败提示窗口
+		    $("#dialog_updatefail").dialog({
+		      dialogClass: 'ui-dialog-red',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
 
 			// 保存
 			$('#' + key + ' .form-actions button[title="ok"]').live(
@@ -61,20 +95,19 @@ var Serial = function() {
 								+ key, data, function(data) {
 							var items = jsondata.items;
 							if (data.success == true) {
+								$( "#dialog_updatesuccess" ).dialog( "open" );
 								var index = 0;
 								for ( var i in items) {
 									var item = items[i];
 									item.value = array[i].split('=')[1];
 									index++;
 								}
+								$("#" + key + " form").find("input").attr(
+										"disabled", "disabled");
+								$('#' + key + ' .form-actions').hide();
 							} else {
-								fillForm(items);
+								$( "#dialog_updatefail" ).dialog( "open" );
 							}
-							$("#" + key + " form").find("input").attr(
-									"disabled", "disabled");
-							$('#' + key + ' .form-actions').hide();
-
-							alert(data.msg);
 						}, "json");
 					});
 

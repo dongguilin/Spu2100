@@ -32,7 +32,11 @@ var ConfigBackup = function() {
 						name="channel.conf";
 					}
 					$.post(url,{"operation":"restore","key":key,"dir":dir,"name":name},function(data){
-						alert(data.msg);
+						if(data.success==true){
+							$( "#dialog_backupsuccess" ).dialog( "open" );
+						}else{
+							$( "#dialog_backupfail" ).dialog( "open" );
+						}
 					},"json");
 				});
 			
@@ -42,13 +46,83 @@ var ConfigBackup = function() {
 					var $tr=$(this).parents('tr:first');
 					$.post(url,{"operation":"delete","key":key,"name":name},function(data){
 						if(data.success==true){
+							$( "#dialog_delsuccess" ).dialog( "open" );
 							$tr.remove();
+						}else{
+							$( "#dialog_delfail" ).dialog( "open" );
 						}
-						alert(data.msg);
 					},"json");
 				});
 
 			});
+			
+			//修改成功提示窗口
+		    $("#dialog_backupsuccess").dialog({
+		      dialogClass: 'ui-dialog-blue',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //修改失败提示窗口
+		    $("#dialog_backupfail").dialog({
+		      dialogClass: 'ui-dialog-red',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //删除成功提示窗口
+		    $("#dialog_delsuccess").dialog({
+		      dialogClass: 'ui-dialog-blue',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //删除失败提示窗口
+		    $("#dialog_delfail").dialog({
+		      dialogClass: 'ui-dialog-red',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
 
 		}
 	};

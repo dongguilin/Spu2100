@@ -91,6 +91,40 @@ var IO = function() {
 				$tds[2].innerHTML = '<td><a title="edit" href="javascript:;"><i class="icon-edit"></i>编辑</a></td>';
 				resetLastEditObj();
 			}
+			
+			//修改成功提示窗口
+		    $("#dialog_updatesuccess").dialog({
+		      dialogClass: 'ui-dialog-blue',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //修改失败提示窗口
+		    $("#dialog_updatefail").dialog({
+		      dialogClass: 'ui-dialog-red',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
 
 			// 保存
 			$('#IO a[title="save"]').live('click',function(e) {
@@ -107,6 +141,7 @@ var IO = function() {
 						data,
 						function(obj) {
 							if (obj.success == true) {
+								$( "#dialog_updatesuccess" ).dialog( "open" );
 								var $tds = $tr.find('td');
 								$tds.find('option[value="'
 											+ data.isconfig
@@ -119,11 +154,10 @@ var IO = function() {
 										"disabled",
 										"disabled");
 								$tds[2].innerHTML = '<td><a title="edit" href="javascript:;"><i class="icon-edit"></i>编辑</a></td>';
+								resetLastEditObj();
 							} else {
-								resetRow();
+								$( "#dialog_updatefail" ).dialog( "open" );
 							}
-							resetLastEditObj();
-							alert(obj.msg);
 						}, "json");
 
 			});

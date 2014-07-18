@@ -100,22 +100,55 @@ var ChannelConfig = function () {
                 
                 $.post("../ChannelConfServlet",data,function(result){
                 	var obj=jQuery.parseJSON(result);
-                	alert(obj.msg);
                 	if(obj.success==true){
+                		$( "#dialog_updatesuccess" ).dialog( "open" );
                         var $tds=$tr.find('td');
                        
                 		$tds[0].innerHTML='<td>' + $($inputs[0]).attr("value")+ '</td>';
                 		$tds[1].innerHTML='<td>' + $($inputs[1]).attr("value") + '</td>';
                 		$tds[2].innerHTML='<td>' + $($inputs[2]).attr("value") + '</td>';
                 		$tds[3].innerHTML='<td><a title="edit" href="javascript:;"><i class="icon-edit"></i>编辑</a></td>';
-                		
+                		resetLastEditObj();
                 	}else{
-                		resetRow();
+                		$( "#dialog_updatefail" ).dialog( "open" );
                 	}
-                	resetLastEditObj();
                 });
                 
         	});
+        	
+        	//修改成功提示窗口
+		    $("#dialog_updatesuccess").dialog({
+		      dialogClass: 'ui-dialog-blue',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //修改失败提示窗口
+		    $("#dialog_updatefail").dialog({
+		      dialogClass: 'ui-dialog-red',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
         	
         	
         	

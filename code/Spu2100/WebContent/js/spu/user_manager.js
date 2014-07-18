@@ -16,6 +16,74 @@ var UserManager = function () {
         	
         	var $addform=$("form[name='add_user']");
         	
+        	//修改成功提示窗口
+		    $("#dialog_updatesuccess").dialog({
+		      dialogClass: 'ui-dialog-blue',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //修改失败提示窗口
+		    $("#dialog_updatefail").dialog({
+		      dialogClass: 'ui-dialog-red',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //添加成功提示窗口
+		    $("#dialog_addsuccess").dialog({
+		      dialogClass: 'ui-dialog-blue',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //添加失败提示窗口
+		    $("#dialog_addfail").dialog({
+		      dialogClass: 'ui-dialog-red',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+        	
         	var addValidate=$addform.validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-inline', // default input error message class
@@ -81,12 +149,14 @@ var UserManager = function () {
         			data.password=$('#password').val();
         			
 	        		$.post(url, data, function(obj) {
-	        			alert(obj.msg);
 						if (obj.success==true) {
+							$( "#dialog_addsuccess" ).dialog( "open" );
 							addValidate.resetForm();
 							var $ul=$('#userList').find('ul');
 							var $li=$("<li><span >"+data.username+"</span></li>");
 	            			$ul.append($li);
+						}else{
+							$( "#dialog_addfail" ).dialog( "open" );
 						}
 					}, "json");
         		}
@@ -159,9 +229,11 @@ var UserManager = function () {
         			data.new_pwd=$('#new_pwd').val();
         			
 	        		$.post(url, data, function(obj) {
-	        			alert(obj.msg);
 	        			if(obj.success=true){
+	        				$( "#dialog_updatesuccess" ).dialog( "open" );
 	        				window.location.assign("login-soft.html");
+	        			}else{
+	        				$( "#dialog_updatefail" ).dialog( "open" );
 	        			}
 					}, "json");
         		}

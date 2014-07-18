@@ -116,8 +116,12 @@ var Uploaddata = function() {
 			$('#JCL_form').find("button:first").click(function(){
 				var data=$('#JCL_form').find("form").serialize();
 				$.post(baseurl+"?operation="+JCL_flag,data,function(data){
-					alert(data.msg);
 					if(data.success==true){
+						if(JCL_flag=="update"){
+							$( "#dialog_updatesuccess" ).dialog( "open" );
+						}else{
+							$( "#dialog_addsuccess" ).dialog( "open" );
+						}
 						//请求JCL数据
 						$.post(baseurl, {
 							"operation" : "query",
@@ -128,6 +132,12 @@ var Uploaddata = function() {
 						}, "json");
 						$("#JCL_form").hide();
 						$("#JCL_info").show();
+					}else{
+						if(JCL_flag=="update"){
+							$( "#dialog_updatefail" ).dialog( "open" );
+						}else{
+							$( "#dialog_addfail" ).dialog( "open" );
+						}
 					}
 				},"json");
 			});
@@ -212,9 +222,12 @@ var Uploaddata = function() {
 			$('#BX_form').find("button:first").click(function(){
 				var data=$('#BX_form').find("form").serialize();
 				$.post(baseurl+"?operation="+BX_flag,data,function(data){
-					console.log(data);
-					alert(data.msg);
 					if(data.success==true){
+						if(BX_flag=="update"){
+							$( "#dialog_updatesuccess" ).dialog( "open" );
+						}else{
+							$( "#dialog_addsuccess" ).dialog( "open" );
+						}
 						//请求BX数据
 						$.post(baseurl, {
 							"operation" : "query",
@@ -225,6 +238,12 @@ var Uploaddata = function() {
 						}, "json");
 						$("#BX_form").hide();
 						$("#BX_info").show();
+					}else{
+						if(BX_flag="update"){
+							$( "#dialog_updatefail" ).dialog( "open" );
+						}else{
+							$( "#dialog_addfail" ).dialog( "open" );
+						}
 					}
 				},"json");
 				
@@ -237,7 +256,73 @@ var Uploaddata = function() {
 				$('#BX_form').hide();
 			});
 			
-			
+			//修改成功提示窗口
+		    $("#dialog_updatesuccess").dialog({
+		      dialogClass: 'ui-dialog-blue',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //修改失败提示窗口
+		    $("#dialog_updatefail").dialog({
+		      dialogClass: 'ui-dialog-red',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //添加成功提示窗口
+		    $("#dialog_addsuccess").dialog({
+		      dialogClass: 'ui-dialog-blue',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //添加失败提示窗口
+		    $("#dialog_addfail").dialog({
+		      dialogClass: 'ui-dialog-red',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
 			
 		}
 	};
