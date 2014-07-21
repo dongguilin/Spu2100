@@ -147,4 +147,10 @@
     <servlet-name>JCLServlet</servlet-name>
     <url-pattern>/JCLServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<description></description>
+  	<display-name>AlarmConfigServlet</display-name>
+  	<servlet-name>AlarmConfigServlet</servlet-name>
+  	<servlet-class>com.oge.spu.action.AlarmConfigServlet</servlet-class>
+  </servlet>
 </web-app>
