@@ -153,4 +153,8 @@
   	<servlet-name>AlarmConfigServlet</servlet-name>
   	<servlet-class>com.oge.spu.action.AlarmConfigServlet</servlet-class>
   </servlet>
+  <servlet-mapping>
+  	<servlet-name>AlarmConfigServlet</servlet-name>
+  	<url-pattern>/AlarmConfigServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

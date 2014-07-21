@@ -65,7 +65,6 @@ public class AlarmConfigServlet extends HttpServlet {
 
 	private void queryAll(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		System.out.println("hehe");
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().write(
 				JSONObject.fromObject(service.queryAllAlarmElement())

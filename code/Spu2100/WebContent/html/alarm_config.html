@@ -238,7 +238,7 @@
 										<i class="icon-plus"></i>
 									</a>
 								</div>
-								<table class="table table-striped table-hover">
+								<table class="table table-striped table-hover" id="form_base_table">
 									<thead>
 										<tr>
 											<th>元素类型</th>
@@ -263,15 +263,15 @@
 										<div class="scroller" style="height:390px" data-always-visible="1" data-rail-visible1="1">
 											<form class="form-horizontal">
 												<div class="control-group">
-													<label class="control-label">监测量编号:</label>
+													<label class="control-label">元素类型:</label>
 													<div class="controls">
-														<input name="v1" id="v1" type="text" class="m-wrap small" readonly="readonly">
+														<input name="v0" id="v0" type="text" class="m-wrap small" readonly="readonly">
 													</div>
 												</div>
 												<div class="control-group">
-													<label class="control-label">报警通道编号</label>
+													<label class="control-label">报警通道号</label>
 													<div class="controls">
-														<select name="v2" id="v2">
+														<select name="v1" id="v1">
 															<option value="0">0</option>
 															<option value="1">1</option>
 															<option value="2">2</option>
@@ -289,6 +289,12 @@
 															<option value="14">14</option>
 															<option value="15">15</option>
 														</select>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label">监测量编号:</label>
+													<div class="controls">
+														<input name="v2" id="v2" type="text" class="m-wrap small">
 													</div>
 												</div>
 												<div class="control-group">
@@ -325,8 +331,8 @@
 													</div>
 												</div>
 												<div class="form-actions">
-													<button title="ok" type="button" class="btn blue"><i class="icon-ok"></i> 保存</button>
-													<button title="cancel" type="button" class="btn">取消</button>
+													<button id="addbasebutton" type="button" class="btn blue" data-dismiss="modal"><i class="icon-ok"></i> 保存</button>
+													<button title="cancel" type="button" class="btn" data-dismiss="modal">取消</button>
 												</div>
 											</form>
 										</div>
