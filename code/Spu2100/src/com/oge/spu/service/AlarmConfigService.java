@@ -1,5 +1,6 @@
 package com.oge.spu.service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -88,9 +89,20 @@ public class AlarmConfigService {
 			Map<String, Map<String, String>> map = list
 					.get(Constants.ALARM_INDEX);
 			Map<String, String> items = map.get(alarmKey);
+			
+			Iterator<String> iter = items.keySet().iterator();
+			while(iter.hasNext()){
+				String key=iter.next();
+				if(itemKey.equals("CC")&&key.contains("C")){
+					iter.remove();
+				}
+				if(itemKey.equals("TT")&&key.contains("T")){
+					iter.remove();
+				}
+			}
 
 			Set<String> cc = getSet(itemValue);
-			Iterator<String> iter = cc.iterator();
+			iter = cc.iterator();
 			while (iter.hasNext()) {
 				String key = iter.next();
 				String value = alarmElementConfigDao.get(key);
