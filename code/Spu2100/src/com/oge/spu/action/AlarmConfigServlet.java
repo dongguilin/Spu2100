@@ -48,7 +48,96 @@ public class AlarmConfigServlet extends HttpServlet {
 			add(request, response);
 		} else if (operation.equals("queryAll")) {
 			queryAll(request, response);
+		} else if (operation.equals("updateAlarmElement")) {
+			updateAlarmElement(request, response);
+		} else if (operation.equals("addAlarmElement")) {
+			addAlarmElement(request, response);
+		} else if (operation.equals("deleteAlarmElement")) {
+			deleteAlarmElement(request, response);
+		} else if (operation.equals("queryAllAlarmCombine")) {
+			queryAllAlarmCombine(request, response);
+		} else if (operation.equals("addAlarmCombine")) {
+			addAlarmCombine(request, response);
+		} else if (operation.equals("removeAlarmCombine")) {
+			removeAlarmCombine(request, response);
+		} else if (operation.equals("updateAlarmCombine")) {
+			updateAlarmCombine(request, response);
 		}
+	}
+
+	private void updateAlarmCombine(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String alarmKey = request.getParameter("alarmKey");
+		String itemKey = request.getParameter("itemKey");
+		String itemValue = request.getParameter("itemValue");
+		boolean flag = service.updateAlarmCombine(alarmKey, itemKey, itemValue);
+		BaseResultBean result = new BaseResultBean();
+		response.setContentType("text/html;charset=utf-8");
+		result.setSuccess(flag);
+		response.getWriter().write(JSONObject.fromObject(result).toString());
+	}
+
+	private void addAlarmCombine(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String alarmKey = request.getParameter("alarmKey");
+		String itemKey = request.getParameter("itemKey");
+		String itemValue = request.getParameter("itemValue");
+		boolean flag = service.addAlarmCombine(alarmKey, itemKey, itemValue);
+		BaseResultBean result = new BaseResultBean();
+		response.setContentType("text/html;charset=utf-8");
+		result.setSuccess(flag);
+		response.getWriter().write(JSONObject.fromObject(result).toString());
+	}
+
+	private void removeAlarmCombine(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String alarmKey = request.getParameter("alarmKey");
+		String itemKey = request.getParameter("itemKey");
+		String itemValue = request.getParameter("itemValue");
+		boolean flag = service.removeAlarmCombine(alarmKey, itemKey, itemValue);
+		BaseResultBean result = new BaseResultBean();
+		response.setContentType("text/html;charset=utf-8");
+		result.setSuccess(flag);
+		response.getWriter().write(JSONObject.fromObject(result).toString());
+	}
+
+	private void queryAllAlarmCombine(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		Map<String, Map<String, String>> map = service.queryAllAlarmCombine();
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(JSONObject.fromObject(map).toString());
+	}
+
+	private void deleteAlarmElement(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String key = request.getParameter("key");
+		boolean flag = service.deleteAlarmElement(key);
+		BaseResultBean result = new BaseResultBean();
+		response.setContentType("text/html;charset=utf-8");
+		result.setSuccess(flag);
+		response.getWriter().write(JSONObject.fromObject(result).toString());
+	}
+
+	private void addAlarmElement(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String key = request.getParameter("key");
+		String value = request.getParameter("value");
+		boolean flag = service.addAlarmElement(key, value);
+		BaseResultBean result = new BaseResultBean();
+		response.setContentType("text/html;charset=utf-8");
+		result.setSuccess(flag);
+		response.getWriter().write(JSONObject.fromObject(result).toString());
+	}
+
+	private void updateAlarmElement(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String key = request.getParameter("key");
+		String value = request.getParameter("value");
+		boolean flag = service.updateAlarmElement(key, value);
+		BaseResultBean result = new BaseResultBean();
+		response.setContentType("text/html;charset=utf-8");
+		result.setSuccess(flag);
+		response.getWriter().write(JSONObject.fromObject(result).toString());
 	}
 
 	private void add(HttpServletRequest request, HttpServletResponse response)

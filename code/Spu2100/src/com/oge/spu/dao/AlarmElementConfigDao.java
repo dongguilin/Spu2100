@@ -26,6 +26,14 @@ public class AlarmElementConfigDao {
 			e.printStackTrace();
 		}
 	}
+	
+	public String get(String key){
+		String str=proConfiguration.getProperty(key).toString();
+		if(str.length()>2){
+			str=str.substring(1,str.length()-1);
+		}
+		return str;
+	}
 
 	public void add(String key, String value) throws ConfigurationException {
 		proConfiguration.addProperty(key, value);

@@ -20,6 +20,7 @@
 	<link href="../metro1.4/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 	<!-- END GLOBAL MANDATORY STYLES -->
 	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="../metro1.4/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.css"/>
 	<!-- END PAGE LEVEL STYLES -->
 	<link rel="shortcut icon" href="../metro1.4/favicon.ico" />
 </head>
@@ -331,7 +332,7 @@
 													</div>
 												</div>
 												<div class="form-actions">
-													<button id="addbasebutton" type="button" class="btn blue" data-dismiss="modal"><i class="icon-ok"></i> 保存</button>
+													<button title="ok" type="button" class="btn blue"><i class="icon-ok"></i> 保存</button>
 													<button title="cancel" type="button" class="btn" data-dismiss="modal">取消</button>
 												</div>
 											</form>
@@ -347,13 +348,67 @@
 						<div class="portlet box blue">
 							<div class="portlet-title">
 								<div class="caption"><i class="icon-edit"></i>报警通道配置</div>
-								<div class="actions">
-									<a class="btn green" href="#form_combine" id="add_combine" data-toggle="modal">
+								<!-- <div class="actions">
+									<a class="btn purple" id="add_CC">
+										<i class="icon-plus"></i>添加工况条件
+									</a>
+									<a class="btn green" id="add_TT">
 										<i class="icon-plus"></i>添加监测量条件
 									</a>
+								</div> -->
+							</div>
+							<div id="TTModal" class="modal hide fade" tabindex="-1" data-width="760">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"></button>
+									<h3>监测量条件</h3>
+								</div>
+								<div class="modal-body">
+									<div class="scroller" style="height:180px" data-always-visible="1" data-rail-visible1="1">
+										<form class="form-horizontal">
+											<div class="control-group">
+												<label class="control-label">监测量报警配置(TT):</label>
+												<div class="controls">
+													<input name="TT" id="TT" type="text" class="m-wrap small">
+												</div>
+											</div>
+											<div class="form-actions">
+												<button title="ok" id="TTModal_ok" type="button" class="btn blue"><i class="icon-ok"></i> 保存</button>
+												<button title="cancel" type="button"  data-dismiss="modal" class="btn">取消</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div id="CCModal" class="modal hide fade" tabindex="-1" data-width="760">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"></button>
+									<h3>工况条件</h3>
+								</div>
+								<div class="modal-body">
+									<div class="scroller" style="height:180px" data-always-visible="1" data-rail-visible1="1">
+										<form class="form-horizontal">
+											<div class="control-group">
+												<label class="control-label">工况报警配置(CC):</label>
+												<div class="controls">
+													<input name="CC" id="CC" type="text" class="m-wrap small">
+												</div>
+											</div>
+											<div class="form-actions">
+												<button id="CCModal_ok" title="ok" type="button" class="btn blue"><i class="icon-ok"></i> 保存</button>
+												<button title="cancel" type="button"  data-dismiss="modal" class="btn">取消</button>
+											</div>
+										</form>
+									</div>
 								</div>
 							</div>
 							<div class="portlet-body">
+								<a class="btn purple" id="add_CC">
+									<i class="icon-plus"></i>添加工况条件
+								</a>
+								<a class="btn green" id="add_TT">
+									<i class="icon-plus"></i>添加监测量条件
+								</a>
+								<p></p>
 								<div class="row-fluid">
 									<span>报警通道选择</span>
 									<select id="key" name="key" class="small m-wrap">
@@ -375,7 +430,7 @@
 										<option value="15">15</option>
 									</select>
 								</div>
-								<table class="table table-striped table-hover">
+								<table id="form_combine_table" class="table table-striped table-hover">
 									<thead>
 										<tr>
 											<th>报警类型</th>
@@ -386,38 +441,34 @@
 									<tbody>
 									</tbody>
 								</table>
-								<div id="form_combine" class="modal hide fade" tabindex="-1" data-width="760">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"></button>
-										<h3>新增报警配置</h3>
-									</div>
-									<div class="modal-body">
-										<div class="scroller" style="height:180px" data-always-visible="1" data-rail-visible1="1">
-											<form class="form-horizontal">
-												<div class="control-group">
-													<label class="control-label">监测量报警配置:</label>
-													<div class="controls">
-														<input name="v1" id="v1" type="text" class="m-wrap small">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">工况报警配置:</label>
-													<div class="controls">
-														<input name="v2" id="v2" type="text" class="m-wrap small">
-													</div>
-												</div>
-												<div class="form-actions">
-													<button title="ok" type="button" class="btn blue"><i class="icon-ok"></i> 保存</button>
-													<button title="cancel" type="button" class="btn">取消</button>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
  				</div>
+ 				<div id="dialog_CCexist" title="消息" class="hide">
+					<p>已经存在工况组合配置，无需添加！</p>
+				</div>
+				<div id="dialog_TTexist" title="消息" class="hide">
+					<p>已经存在监测量组合配置，无需添加！</p>
+				</div>
+				<div id="dialog_updatesuccess" title="消息" class="hide">
+					<p>修改成功！</p>
+				</div>
+				<div id="dialog_updatefail" title="消息" class="hide">
+					<p>修改失败！</p>
+				</div>
+				<div id="dialog_addsuccess" title="消息" class="hide">
+					<p>添加成功！</p>
+				</div>
+				<div id="dialog_addfail" title="消息" class="hide">
+					<p>添加失败！</p>
+				</div>
+				<div id="dialog_deletesuccess" title="消息" class="hide">
+					<p>删除成功！</p>
+				</div>
+				<div id="dialog_deletefail" title="消息" class="hide">
+					<p>删除失败！</p>
+				</div>
 				<!-- END PAGE CONTENT-->
 			</div>
 			<!-- END PAGE CONTAINER--> 
@@ -459,6 +510,11 @@
 	<script src="../metro1.4/assets/scripts/app.js"></script>
 	<script src="../js/spu/common.js"></script>
 	<script src="../js/spu/alarm_config.js"></script>
+	<script type="text/javascript" src="../metro1.4/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="../metro1.4/assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>
+	<script type="text/javascript" src="../metro1.4/assets/plugins/select2/select2.min.js"></script>
+	<script type="text/javascript" src="../metro1.4/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+	<script src="../metro1.4/assets/scripts/form-validation.js"></script> 
 	<!-- END PAGE LEVEL SCRIPTS -->  
 	<script>
 		jQuery(document).ready(function() {    
