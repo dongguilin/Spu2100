@@ -258,14 +258,14 @@ var Alarm_config = function() {
 				initCombineTable(combinedata[key]);
 			});
 
-			// 添加监测量条件
+			// 添加工况条件
 			$('#add_T').click(function() {
 				form_flag = "addAlarmElement";
 				$('#form_base').find('form')[0].reset();
 				$('#v0').val(TMax);
 			});
 
-			// 添加工况条件
+			// 添加监测量条件
 			$('#add_C').click(function() {
 				form_flag = "addAlarmElement";
 				$('#form_base').find('form')[0].reset();
