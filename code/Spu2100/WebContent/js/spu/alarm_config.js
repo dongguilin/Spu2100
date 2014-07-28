@@ -3,6 +3,8 @@ var Alarm_config = function() {
 	return {
 
 		init : function() {
+			
+			var combinedata = {};
 
 			$.post("../AlarmConfigServlet", {
 				"operation" : "queryAll"
@@ -60,6 +62,9 @@ var Alarm_config = function() {
 			 * 
 			 * });
 			 */
+			
+			var Cs=[];
+			var Ts=[];
 
 			// 根据后台返回的json数据初始化表格
 			function initBaseTable(data) {
@@ -71,10 +76,12 @@ var Alarm_config = function() {
 									if (index.indexOf('C') != -1) {
 										CMax = "C"
 												+ (Number(index.substring(1)) + 1);
+										Cs.push(index);
 									}
 									if (index.indexOf('T') != -1) {
 										TMax = "T"
 												+ (Number(index.substring(1)) + 1);
+										Ts.push(index);
 									}
 									var $tr = $('<tr>');
 									$tr.append($('<td>').text(index));
@@ -87,9 +94,9 @@ var Alarm_config = function() {
 									$tr.append($con);
 									$tbody.append($tr);
 								});
+				initCButtons();
+				initTButtons();
 			}
-
-			var combinedata = {};
 
 			function initCombineTable(d) {
 				var $tbody = $('#form_combine_table').find('tbody').empty();
@@ -136,7 +143,44 @@ var Alarm_config = function() {
 					$('#TTModal').find('form')[0].reset();
 				}
 			});
-
+			
+			function initTButtons(){
+				var $tbuttons=$("#tbuttons").empty();
+				for(var i in Ts){
+					var value=Ts[i];
+					$a = $("<a>").text(value).attr({
+						"id":value,
+						"class" : "btn purple-stripe",
+						"href" : "javascript:;"
+					});
+					$tbuttons.append($a);
+					$("#"+value).live('click',function(e){
+						var text=$("#TT").val().trim();
+						text=text+$(this).text();
+						$("#TT").val(text);
+					});
+				}
+			}
+			
+			function initCButtons(){
+				var $cbuttons=$("#cbuttons").empty();
+				for(var i in Cs){
+					var val=Cs[i];
+					$a = $("<a>").text(val).attr({
+						"id":val,
+						"class" : "btn purple-stripe",
+						"href" : "javascript:;"
+					});
+					$("#"+val).live('click',function(e){
+						var text=$("#CC").val().trim();
+						console.log($(this)[0].id);
+						text=text+$(this)[0].id;
+						$("#CC").val(text);
+					});
+					$cbuttons.append($a);
+				}
+			}
+			
 			$('#add_CC').click(function() {
 				form_flag = "addAlarmCombine";
 				var key = $('#key').val();

@@ -11,6 +11,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import jodd.util.StringUtil;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.log4j.Logger;
 
@@ -102,9 +104,11 @@ public class AlarmConfigService {
 			}
 
 			Set<String> cc = getSet(itemValue);
+			System.out.println(cc);
 			iter = cc.iterator();
 			while (iter.hasNext()) {
 				String key = iter.next();
+				System.out.println(key);
 				String value = alarmElementConfigDao.get(key);
 				items.put(key, value);
 			}
@@ -112,11 +116,12 @@ public class AlarmConfigService {
 			
 			Map<String, Map<String, String>> newMap = new LinkedHashMap<String, Map<String, String>>();
 			for (Map<String, Map<String, String>> m : list) {
-				newMap.putAll(map);
+				newMap.putAll(m);
 			}
 			setupConfigDao.writeToConf(newMap);
 			result = true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
 		return result;
@@ -136,6 +141,7 @@ public class AlarmConfigService {
 			Iterator<String> iter = cc.iterator();
 			while (iter.hasNext()) {
 				String key = iter.next();
+				System.out.println(key);
 				items.remove(key);
 			}
 			items.remove(itemKey);
@@ -296,14 +302,16 @@ public class AlarmConfigService {
 
 	private Set<String> getSet(String str) {
 		Set<String> result = new TreeSet<String>();
-		str = str.replaceAll("\\*", "");
+		str = str.replaceAll("\\*", " ");
 		str = str.replaceAll("\\+", " ");
 		str = str.replaceAll("\\(", " ");
 		str = str.replaceAll("\\)", " ");
 		str = str.trim();
 		String[] strs = str.split(" ");
 		for (String s : strs) {
-			result.add(s);
+			if(!StringUtil.isEmpty(s)){
+				result.add(s);
+			}
 		}
 		return result;
 	}

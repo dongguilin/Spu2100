@@ -357,21 +357,37 @@
 									</a>
 								</div> -->
 							</div>
-							<div id="TTModal" class="modal hide fade" tabindex="-1" data-width="760">
+							<div id="TTModal" class="modal hide fade" tabindex="-1" data-width="860">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal"></button>
 									<h3>工况条件</h3>
 								</div>
 								<div class="modal-body">
-									<div class="scroller" style="height:180px" data-always-visible="1" data-rail-visible1="1">
+									<div class="scroller" style="height:280px" data-always-visible="1" data-rail-visible1="1">
 										<form class="form-horizontal">
 											<div class="control-group">
 												<label class="control-label">工况报警配置(TT):</label>
 												<div class="controls">
-													<input name="TT" id="TT" type="text" class="m-wrap small">
+													<input name="TT" id="TT" type="text" class="m-wrap large">
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label">逻辑符号</label>
+												<div class="controls">
+													<a class="btn green" onclick='var text=$("#TT").val().trim();text=text+"(";$("#TT").val(text);'>(</a>
+													<a class="btn blue" onclick='var text=$("#TT").val().trim();text=text+"+";$("#TT").val(text);'>+</a>
+													<a class="btn blue" onclick='var text=$("#TT").val().trim();text=text+"*";$("#TT").val(text);'>*</a>
+													<a class="btn green" onclick='var text=$("#TT").val().trim();text=text+")";$("#TT").val(text);'>)</a>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label">报警元素</label>
+												<div class="controls" id="tbuttons">
+												
 												</div>
 											</div>
 											<div class="form-actions">
+												<a class="btn green" onclick='var text=$("#TT").val().trim();text=text.substring(0,text.length-1);$("#TT").val(text);'>退格</a>
 												<button title="ok" id="TTModal_ok" type="button" class="btn blue"><i class="icon-ok"></i> 保存</button>
 												<button title="cancel" type="button"  data-dismiss="modal" class="btn">取消</button>
 											</div>
@@ -379,21 +395,37 @@
 									</div>
 								</div>
 							</div>
-							<div id="CCModal" class="modal hide fade" tabindex="-1" data-width="760">
+							<div id="CCModal" class="modal hide fade" tabindex="-1" data-width="860">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal"></button>
 									<h3>监测量条件</h3>
 								</div>
 								<div class="modal-body">
-									<div class="scroller" style="height:180px" data-always-visible="1" data-rail-visible1="1">
+									<div class="scroller" style="height:280px" data-always-visible="1" data-rail-visible1="1">
 										<form class="form-horizontal">
 											<div class="control-group">
 												<label class="control-label">监测量报警配置(CC):</label>
 												<div class="controls">
-													<input name="CC" id="CC" type="text" class="m-wrap small">
+													<input name="CC" id="CC" type="text" class="m-wrap large">
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label">逻辑符号</label>
+												<div class="controls">
+													<a class="btn green" onclick='var text=$("#CC").val().trim();text=text+"(";$("#CC").val(text);'>(</a>
+													<a class="btn blue" onclick='var text=$("#CC").val().trim();text=text+"+";$("#CC").val(text);'>+</a>
+													<a class="btn blue" onclick='var text=$("#CC").val().trim();text=text+"*";$("#CC").val(text);'>*</a>
+													<a class="btn green" onclick='var text=$("#CC").val().trim();text=text+")";$("#CC").val(text);'>)</a>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label">报警元素</label>
+												<div class="controls" id="cbuttons">
+												
 												</div>
 											</div>
 											<div class="form-actions">
+												<a class="btn green" onclick='var text=$("#CC").val().trim();text=text.substring(0,text.length-1);$("#CC").val(text);'>退格</a>
 												<button id="CCModal_ok" title="ok" type="button" class="btn blue"><i class="icon-ok"></i> 保存</button>
 												<button title="cancel" type="button"  data-dismiss="modal" class="btn">取消</button>
 											</div>
@@ -402,12 +434,6 @@
 								</div>
 							</div>
 							<div class="portlet-body">
-								<a class="btn green" id="add_TT">
-									<i class="icon-plus"></i>添加工况条件
-								</a>
-								<a class="btn purple" id="add_CC">
-									<i class="icon-plus"></i>添加监测量条件
-								</a>
 								<p></p>
 								<div class="row-fluid">
 									<span>报警通道选择</span>
@@ -429,6 +455,12 @@
 										<option value="14">14</option>
 										<option value="15">15</option>
 									</select>
+									<a class="btn green" id="add_TT">
+										<i class="icon-plus"></i>添加工况条件
+									</a>
+									<a class="btn purple" id="add_CC">
+										<i class="icon-plus"></i>添加监测量条件
+									</a>
 								</div>
 								<table id="form_combine_table" class="table table-striped table-hover">
 									<thead>
