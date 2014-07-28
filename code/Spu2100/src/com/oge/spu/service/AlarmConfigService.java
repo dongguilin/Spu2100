@@ -1,6 +1,5 @@
 package com.oge.spu.service;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -72,7 +71,7 @@ public class AlarmConfigService {
 			
 			Map<String, Map<String, String>> newMap = new LinkedHashMap<String, Map<String, String>>();
 			for (Map<String, Map<String, String>> m : list) {
-				newMap.putAll(map);
+				newMap.putAll(m);
 			}
 			setupConfigDao.writeToConf(newMap);
 			result = true;
@@ -108,7 +107,6 @@ public class AlarmConfigService {
 			iter = cc.iterator();
 			while (iter.hasNext()) {
 				String key = iter.next();
-				System.out.println(key);
 				String value = alarmElementConfigDao.get(key);
 				items.put(key, value);
 			}
@@ -148,7 +146,7 @@ public class AlarmConfigService {
 			
 			Map<String, Map<String, String>> newMap = new LinkedHashMap<String, Map<String, String>>();
 			for (Map<String, Map<String, String>> m : list) {
-				newMap.putAll(map);
+				newMap.putAll(m);
 			}
 			setupConfigDao.writeToConf(newMap);
 			result = true;
