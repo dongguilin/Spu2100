@@ -65,7 +65,7 @@ var Alarm_config = function() {
 			
 			var Cs=[];
 			var Ts=[];
-
+			
 			// 根据后台返回的json数据初始化表格
 			function initBaseTable(data) {
 				var $tbody = $('#form_base_table').find('tbody').empty();
@@ -142,6 +142,40 @@ var Alarm_config = function() {
 					form_flag = "addAlarmCombine";
 					$('#TTModal').find('form')[0].reset();
 				}
+			});
+			
+			$("#cc_del").click(function(){
+				var text=$("#CC").val().trim();
+				var length=1;
+				if(text.substring(text.length-1,text.length).search(/[+*()]/)!=-1){
+					length=1;
+				}else{
+					if(text.substring(text.length-1,text.length).search(/[0-9]/)!=-1){
+						length=2;
+					}
+					if(text.substring(text.length-2,text.length-1).search(/[0-9]/)!=-1){
+						length=3;
+					}
+				}
+				text=text.substring(0,text.length-length);
+				$("#CC").val(text);
+			});
+			
+			$("#dd_del").click(function(){
+				var text=$("#TT").val().trim();
+				var length=1;
+				if(text.substring(text.length-1,text.length).search(/[+*()]/)!=-1){
+					length=1;
+				}else{
+					if(text.substring(text.length-1,text.length).search(/[0-9]/)!=-1){
+						length=2;
+					}
+					if(text.substring(text.length-2,text.length-1).search(/[0-9]/)!=-1){
+						length=3;
+					}
+				}
+				text=text.substring(0,text.length-length);
+				$("#TT").val(text);
 			});
 			
 			function initTButtons(){
