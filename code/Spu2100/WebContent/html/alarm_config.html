@@ -224,21 +224,38 @@
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row-fluid">
 					<div class="span12">
-						<div class="portlet box blue">
+						<div class="portlet box blue" id="element">
 							<div class="portlet-title">
 								<div class="caption"><i class="icon-edit"></i>报警元素定义</div>
 							</div>
 							<div class="portlet-body">
-								<div class="table-toolbar">
-									<a id="add_T" data-toggle="modal" class="btn green" href="#form_base">
-										添加工况条件
-										<i class="icon-plus"></i>
-									</a>
-									<a id="add_C" data-toggle="modal" class="btn purple" href="#form_base">
-										添加监测量条件
-										<i class="icon-plus"></i>
-									</a>
-								</div>
+								<span>报警通道选择</span>
+								<select class="small m-wrap" id="element_td">
+									<option value="0">0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+								</select>
+								<a id="add_T" data-toggle="modal" class="btn green" href="#form_base">
+									添加工况条件
+									<i class="icon-plus"></i>
+								</a>
+								<a id="add_C" data-toggle="modal" class="btn purple" href="#form_base">
+									添加监测量条件
+									<i class="icon-plus"></i>
+								</a>
 								<table class="table table-striped table-hover" id="form_base_table">
 									<thead>
 										<tr>

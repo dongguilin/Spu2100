@@ -3,15 +3,26 @@ var Alarm_config = function() {
 	return {
 
 		init : function() {
-			
-			var combinedata = {};
 
+			// 基本元素数据
+			var elementData = {};
+			// 组合元素数据
+			var combinedata = {};
+			// 新增或修改的标志
+			var form_flag = "";
+			var CMax = "C0";
+			var TMax = "T0";
+			var Cs = [];
+			var Ts = [];
+
+			// 加载基本元素配置信息
 			$.post("../AlarmConfigServlet", {
-				"operation" : "queryAll"
+				"operation" : "queryAllAlarmElement"
 			}, function(data) {
 				initBaseTable(data);
 			}, "json");
 
+			// 加载组合元素配置信息
 			$.post("../AlarmConfigServlet", {
 				"operation" : "queryAllAlarmCombine"
 			}, function(data) {
@@ -25,10 +36,47 @@ var Alarm_config = function() {
 				});
 			}, "json");
 
-			// 新增或修改的标志
-			var form_flag = "";
-			var CMax = "C0";
-			var TMax = "T0";
+			// 基本元素通道切换处理
+			$("#element_td")
+					.change(
+							function() {
+								var td = $(this).val();
+								var items = elementData[td];
+								var $tbody = $('#form_base_table')
+										.find('tbody').empty();
+								$
+										.each(
+												items,
+												function(index, d) {
+													if (index.indexOf('C') != -1) {
+														CMax = "C"
+																+ (Number(index
+																		.substring(1)) + 1);
+														Cs.push(index);
+													}
+													if (index.indexOf('T') != -1) {
+														TMax = "T"
+																+ (Number(index
+																		.substring(1)) + 1);
+														Ts.push(index);
+													}
+													var $tr = $('<tr>');
+													$tr.append($('<td>').text(
+															index));
+													for ( var i in d) {
+														$td = $('<td>').text(
+																d[i]);
+														$tr.append($td);
+													}
+													var $con = $('<td><a title="edit" data-toggle="modal" href="#form_base"><i class="icon-edit"></i>编辑</a>'
+															+ '&nbsp;&nbsp;<a title="delete" href="javascript:;"><i class="icon-trash"></i>删除</a></td>');
+													$tr.append($con);
+													$tbody.append($tr);
+												});
+								initCButtons();
+								initTButtons();
+
+							});
 
 			/*
 			 * $('#form_base').find('form').validate({ errorElement: 'span',
@@ -62,16 +110,15 @@ var Alarm_config = function() {
 			 * 
 			 * });
 			 */
-			
-			var Cs=[];
-			var Ts=[];
-			
+
 			// 根据后台返回的json数据初始化表格
 			function initBaseTable(data) {
 				var $tbody = $('#form_base_table').find('tbody').empty();
+				var items = data["0"];
+				elementData = data;
 				$
 						.each(
-								data,
+								items,
 								function(index, d) {
 									if (index.indexOf('C') != -1) {
 										CMax = "C"
@@ -132,6 +179,7 @@ var Alarm_config = function() {
 						}
 					});
 
+			//添加工况组合元素
 			$('#add_TT').click(function() {
 				form_flag = "addAlarmCombine";
 				var key = $('#key').val();
@@ -143,78 +191,91 @@ var Alarm_config = function() {
 					$('#TTModal').find('form')[0].reset();
 				}
 			});
-			
-			$("#cc_del").click(function(){
-				var text=$("#CC").val().trim();
-				var length=1;
-				if(text.substring(text.length-1,text.length).search(/[+*()]/)!=-1){
-					length=1;
-				}else{
-					if(text.substring(text.length-1,text.length).search(/[0-9]/)!=-1){
-						length=2;
-					}
-					if(text.substring(text.length-2,text.length-1).search(/[0-9]/)!=-1){
-						length=3;
-					}
-				}
-				text=text.substring(0,text.length-length);
-				$("#CC").val(text);
-			});
-			
-			$("#dd_del").click(function(){
-				var text=$("#TT").val().trim();
-				var length=1;
-				if(text.substring(text.length-1,text.length).search(/[+*()]/)!=-1){
-					length=1;
-				}else{
-					if(text.substring(text.length-1,text.length).search(/[0-9]/)!=-1){
-						length=2;
-					}
-					if(text.substring(text.length-2,text.length-1).search(/[0-9]/)!=-1){
-						length=3;
-					}
-				}
-				text=text.substring(0,text.length-length);
-				$("#TT").val(text);
-			});
-			
-			function initTButtons(){
-				var $tbuttons=$("#tbuttons").empty();
-				for(var i in Ts){
-					var value=Ts[i];
+
+			$("#cc_del")
+					.click(
+							function() {
+								var text = $("#CC").val().trim();
+								var length = 1;
+								if (text
+										.substring(text.length - 1, text.length)
+										.search(/[+*()]/) != -1) {
+									length = 1;
+								} else {
+									if (text.substring(text.length - 1,
+											text.length).search(/[0-9]/) != -1) {
+										length = 2;
+									}
+									if (text.substring(text.length - 2,
+											text.length - 1).search(/[0-9]/) != -1) {
+										length = 3;
+									}
+								}
+								text = text.substring(0, text.length - length);
+								$("#CC").val(text);
+							});
+
+			$("#dd_del")
+					.click(
+							function() {
+								var text = $("#TT").val().trim();
+								var length = 1;
+								if (text
+										.substring(text.length - 1, text.length)
+										.search(/[+*()]/) != -1) {
+									length = 1;
+								} else {
+									if (text.substring(text.length - 1,
+											text.length).search(/[0-9]/) != -1) {
+										length = 2;
+									}
+									if (text.substring(text.length - 2,
+											text.length - 1).search(/[0-9]/) != -1) {
+										length = 3;
+									}
+								}
+								text = text.substring(0, text.length - length);
+								$("#TT").val(text);
+							});
+
+			function initTButtons() {
+				var $tbuttons = $("#tbuttons").empty();
+				for ( var i in Ts) {
+					var value = Ts[i];
 					$a = $("<a>").text(value).attr({
-						"id":value,
+						"id" : value,
 						"class" : "btn purple-stripe",
 						"href" : "javascript:;"
 					});
 					$tbuttons.append($a);
-					$("#"+value).live('click',function(e){
-						var text=$("#TT").val().trim();
-						text=text+$(this).text();
+					$("#" + value).live('click', function(e) {
+						var text = $("#TT").val().trim();
+						text = text + $(this).text();
 						$("#TT").val(text);
 					});
 				}
 			}
-			
-			function initCButtons(){
-				var $cbuttons=$("#cbuttons").empty();
-				for(var i in Cs){
-					var val=Cs[i];
+
+			function initCButtons() {
+				var $cbuttons = $("#cbuttons").empty();
+				for ( var i in Cs) {
+					var val = Cs[i];
 					$a = $("<a>").text(val).attr({
-						"id":val,
+						"id" : val,
 						"class" : "btn purple-stripe",
 						"href" : "javascript:;"
 					});
-					$("#"+val).live('click',function(e){
-						var text=$("#CC").val().trim();
+					$("#" + val).live('click', function(e) {
+						var text = $("#CC").val().trim();
 						console.log($(this)[0].id);
-						text=text+$(this)[0].id;
+						text = text + $(this)[0].id;
 						$("#CC").val(text);
 					});
 					$cbuttons.append($a);
 				}
 			}
-			
+
+			//添加监测量组合元素
 			$('#add_CC').click(function() {
 				form_flag = "addAlarmCombine";
 				var key = $('#key').val();
@@ -263,7 +324,7 @@ var Alarm_config = function() {
 					}
 				}, "json");
 			});
-			
+
 			$('#TTModal_ok').click(function() {
 				$.post("../AlarmConfigServlet", {
 					"operation" : form_flag,
@@ -300,23 +361,25 @@ var Alarm_config = function() {
 					}
 				}, "json");
 			});
-			
-			$('#form_combine_table').find("a[title='delete']").live('click',
+
+			$('#form_combine_table').find("a[title='delete']").live(
+					'click',
 					function() {
 						form_flag = "removeAlarmCombine";
 						var $tds = $(this).parents('tr:first').find('td');
-						$.post('../AlarmConfigServlet',{
-							"operation":form_flag,
+						$.post('../AlarmConfigServlet', {
+							"operation" : form_flag,
 							"alarmKey" : $('#key').val(),
 							"itemKey" : $($tds[0]).text(),
 							"itemValue" : $($tds[1]).text()
-						},function(data){
-							if(data.success==true){
+						}, function(data) {
+							if (data.success == true) {
 								$.post("../AlarmConfigServlet", {
 									"operation" : "queryAllAlarmCombine"
 								}, function(data) {
 									combinedata = data;
-									$('#form_combine_table').find('tbody').empty()
+									$('#form_combine_table').find('tbody')
+											.empty()
 									var key = $('#key').val();
 									$.each(data, function(index, d) {
 										if (index == key) {
@@ -325,10 +388,10 @@ var Alarm_config = function() {
 									});
 								}, "json");
 								$("#dialog_deletesuccess").dialog("open");
-							}else{
+							} else {
 								$("#dialog_deletefail").dialog("open");
 							}
-						},"json");
+						}, "json");
 					});
 
 			$('#key').change(function() {

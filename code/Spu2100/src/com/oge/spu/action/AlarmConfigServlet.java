@@ -1,7 +1,6 @@
 package com.oge.spu.action;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -45,13 +44,13 @@ public class AlarmConfigServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String operation = request.getParameter("operation");
 		if (operation.equals("add")) {
-			add(request, response);
-		} else if (operation.equals("queryAll")) {
-			queryAll(request, response);
+			// add(request, response);
+		} else if (operation.equals("queryAllAlarmElement")) {
+			queryAllAlarmElement(request, response);
 		} else if (operation.equals("updateAlarmElement")) {
-			updateAlarmElement(request, response);
+			addOrUpdateAlarmElement(request, response);
 		} else if (operation.equals("addAlarmElement")) {
-			addAlarmElement(request, response);
+			addOrUpdateAlarmElement(request, response);
 		} else if (operation.equals("deleteAlarmElement")) {
 			deleteAlarmElement(request, response);
 		} else if (operation.equals("queryAllAlarmCombine")) {
@@ -110,49 +109,29 @@ public class AlarmConfigServlet extends HttpServlet {
 
 	private void deleteAlarmElement(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String key = request.getParameter("key");
-		boolean flag = service.deleteAlarmElement(key);
-		BaseResultBean result = new BaseResultBean();
-		response.setContentType("text/html;charset=utf-8");
-		result.setSuccess(flag);
-		response.getWriter().write(JSONObject.fromObject(result).toString());
-	}
-
-	private void addAlarmElement(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String key = request.getParameter("key");
-		String value = request.getParameter("value");
-		boolean flag = service.addAlarmElement(key, value);
-		BaseResultBean result = new BaseResultBean();
-		response.setContentType("text/html;charset=utf-8");
-		result.setSuccess(flag);
-		response.getWriter().write(JSONObject.fromObject(result).toString());
-	}
-
-	private void updateAlarmElement(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String key = request.getParameter("key");
-		String value = request.getParameter("value");
-		boolean flag = service.updateAlarmElement(key, value);
-		BaseResultBean result = new BaseResultBean();
-		response.setContentType("text/html;charset=utf-8");
-		result.setSuccess(flag);
-		response.getWriter().write(JSONObject.fromObject(result).toString());
-	}
-
-	private void add(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 		String alarmKey = request.getParameter("alarmKey");
 		String itemKey = request.getParameter("itemKey");
-		String itemValue = request.getParameter("itemValue");
-		boolean flag = service.addAlarmItem(alarmKey, itemKey, itemValue);
+		boolean flag = service.deleteAlarmElement(alarmKey, itemKey);
 		BaseResultBean result = new BaseResultBean();
 		response.setContentType("text/html;charset=utf-8");
 		result.setSuccess(flag);
 		response.getWriter().write(JSONObject.fromObject(result).toString());
 	}
 
-	private void queryAll(HttpServletRequest request,
+	private void addOrUpdateAlarmElement(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String alarmKey = request.getParameter("alarmKey");
+		String itemKey = request.getParameter("itemKey");
+		String value = request.getParameter("value");
+		boolean flag = service
+				.addOrUpdateAlarmElement(alarmKey, itemKey, value);
+		BaseResultBean result = new BaseResultBean();
+		response.setContentType("text/html;charset=utf-8");
+		result.setSuccess(flag);
+		response.getWriter().write(JSONObject.fromObject(result).toString());
+	}
+
+	private void queryAllAlarmElement(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().write(
