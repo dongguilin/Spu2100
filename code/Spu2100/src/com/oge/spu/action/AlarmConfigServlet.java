@@ -43,9 +43,7 @@ public class AlarmConfigServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String operation = request.getParameter("operation");
-		if (operation.equals("add")) {
-			// add(request, response);
-		} else if (operation.equals("queryAllAlarmElement")) {
+		if (operation.equals("queryAllAlarmElement")) {
 			queryAllAlarmElement(request, response);
 		} else if (operation.equals("updateAlarmElement")) {
 			addOrUpdateAlarmElement(request, response);

@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import jodd.util.StringUtil;
@@ -225,7 +227,23 @@ public class AlarmConfigService {
 			Map<String, Map<String, String>> map = alarmElementConfigDao
 					.loadAll();
 			Map<String, String> items = map.get(alarmKey);
-			items.remove(itemKey);
+			
+			Map<String,String> newMap=new TreeMap<String, String>();
+			newMap.putAll(items);
+			newMap.remove(itemKey);
+			
+			int num = Integer.parseInt(itemKey.substring(1));
+			Iterator<String> iter = items.keySet().iterator();
+			while (iter.hasNext()) {
+				String k = iter.next();
+				int n = Integer.parseInt(k.substring(1));
+				if (k.startsWith(itemKey.substring(0, 1)) && n > num) {
+					newMap.remove(k);
+					String newk = itemKey.substring(0, 1) + (n - 1);
+					newMap.put(newk, items.get(k));
+				}
+			}
+			map.put(alarmKey, newMap);
 			alarmElementConfigDao.writeToConf(map);
 			result = true;
 		} catch (ConfigurationException e) {
@@ -241,8 +259,8 @@ public class AlarmConfigService {
 	 * 
 	 * @return
 	 */
-	public Map<String,Map<String, List<String>>> queryAllAlarmElement() {
-		Map<String,Map<String, List<String>>> result = new LinkedHashMap<String,Map<String, List<String>>>();
+	public SortedMap<String, SortedMap<String, List<String>>> queryAllAlarmElement() {
+		SortedMap<String,SortedMap<String, List<String>>> result = new TreeMap<String,SortedMap<String, List<String>>>();
 		try {
 			Map<String, Map<String, String>> map = alarmElementConfigDao
 					.loadAll();
@@ -250,7 +268,7 @@ public class AlarmConfigService {
 			while(keys.hasNext()){
 				String key = keys.next();
 				Map<String,String> temp=map.get(key);
-				Map<String,List<String>> items=new LinkedHashMap<String, List<String>>();
+				SortedMap<String,List<String>> items=new TreeMap<String, List<String>>();
 				Iterator<String> itemKeys=temp.keySet().iterator();
 				while(itemKeys.hasNext()){
 					String itemKey = itemKeys.next();

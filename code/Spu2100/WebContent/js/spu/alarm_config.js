@@ -10,10 +10,9 @@ var Alarm_config = function() {
 			var combinedata = {};
 			// 新增或修改的标志
 			var form_flag = "";
-			var CMax = "C0";
-			var TMax = "T0";
-			var Cs = [];
-			var Ts = [];
+			var CMax = {};
+			var TMax = {};
+			var selecttd="0";
 
 			// 加载基本元素配置信息
 			$.post("../AlarmConfigServlet", {
@@ -41,40 +40,36 @@ var Alarm_config = function() {
 					.change(
 							function() {
 								var td = $(this).val();
+								selecttd=td;
 								var items = elementData[td];
 								var $tbody = $('#form_base_table')
 										.find('tbody').empty();
 								$
-										.each(
-												items,
-												function(index, d) {
-													if (index.indexOf('C') != -1) {
-														CMax = "C"
-																+ (Number(index
-																		.substring(1)) + 1);
-														Cs.push(index);
-													}
-													if (index.indexOf('T') != -1) {
-														TMax = "T"
-																+ (Number(index
-																		.substring(1)) + 1);
-														Ts.push(index);
-													}
-													var $tr = $('<tr>');
-													$tr.append($('<td>').text(
-															index));
-													for ( var i in d) {
-														$td = $('<td>').text(
-																d[i]);
-														$tr.append($td);
-													}
-													var $con = $('<td><a title="edit" data-toggle="modal" href="#form_base"><i class="icon-edit"></i>编辑</a>'
-															+ '&nbsp;&nbsp;<a title="delete" href="javascript:;"><i class="icon-trash"></i>删除</a></td>');
-													$tr.append($con);
-													$tbody.append($tr);
-												});
+								.each(
+										items,
+										function(index, d) {
+											if (index.indexOf('C') != -1) {
+												CMax[d[0]] = "C"
+														+ (Number(index.substring(1)) + 1);
+											}
+											if (index.indexOf('T') != -1) {
+												TMax[d[0]] = "T"
+														+ (Number(index.substring(1)) + 1);
+											}
+											var $tr = $('<tr>');
+											$tr.append($('<td>').text(index));
+											for ( var i in d) {
+												$td = $('<td>').text(d[i]);
+												$tr.append($td);
+											}
+											var $con = $('<td><a title="edit" data-toggle="modal" href="#form_base"><i class="icon-edit"></i>编辑</a>'
+													+ '&nbsp;&nbsp;<a title="delete" href="javascript:;"><i class="icon-trash"></i>删除</a></td>');
+											$tr.append($con);
+											$tbody.append($tr);
+										});
 								initCButtons();
 								initTButtons();
+								console.log(Ts);
 
 							});
 
@@ -114,21 +109,19 @@ var Alarm_config = function() {
 			// 根据后台返回的json数据初始化表格
 			function initBaseTable(data) {
 				var $tbody = $('#form_base_table').find('tbody').empty();
-				var items = data["0"];
+				var items = data[selecttd];
 				elementData = data;
 				$
 						.each(
 								items,
 								function(index, d) {
 									if (index.indexOf('C') != -1) {
-										CMax = "C"
+										CMax[d[0]] = "C"
 												+ (Number(index.substring(1)) + 1);
-										Cs.push(index);
 									}
 									if (index.indexOf('T') != -1) {
-										TMax = "T"
+										TMax[d[0]] = "T"
 												+ (Number(index.substring(1)) + 1);
-										Ts.push(index);
 									}
 									var $tr = $('<tr>');
 									$tr.append($('<td>').text(index));
@@ -240,8 +233,10 @@ var Alarm_config = function() {
 
 			function initTButtons() {
 				var $tbuttons = $("#tbuttons").empty();
-				for ( var i in Ts) {
-					var value = Ts[i];
+				var tmax=TMax[$("#element_td").val()];
+				tmax=tmax.substring(1);
+				for(var i=0;i<tmax;i++){
+					var value="T"+i;
 					$a = $("<a>").text(value).attr({
 						"id" : value,
 						"class" : "btn purple-stripe",
@@ -258,8 +253,10 @@ var Alarm_config = function() {
 
 			function initCButtons() {
 				var $cbuttons = $("#cbuttons").empty();
-				for ( var i in Cs) {
-					var val = Cs[i];
+				var cmax=CMax[$("#element_td").val()];
+				cmax=cmax.substring(1);
+				for(var i=0;i<cmax;i++){
+					var val="C"+i;
 					$a = $("<a>").text(val).attr({
 						"id" : val,
 						"class" : "btn purple-stripe",
@@ -273,6 +270,7 @@ var Alarm_config = function() {
 					});
 					$cbuttons.append($a);
 				}
+				
 			}
 
 			//添加监测量组合元素
@@ -403,14 +401,24 @@ var Alarm_config = function() {
 			$('#add_T').click(function() {
 				form_flag = "addAlarmElement";
 				$('#form_base').find('form')[0].reset();
-				$('#v0').val(TMax);
+				var td=$("#element_td").val();
+				if(!TMax[td]){
+					TMax[td]="T0";
+				}
+				$('#v0').val(TMax[td]);
+				$('#v1').val(td);
 			});
 
 			// 添加监测量条件
 			$('#add_C').click(function() {
 				form_flag = "addAlarmElement";
 				$('#form_base').find('form')[0].reset();
-				$('#v0').val(CMax);
+				var td=$("#element_td").val();
+				if(!CMax[td]){
+					CMax[td]="C0";
+				}
+				$('#v0').val(CMax[td]);
+				$('#v1').val(td);
 			});
 
 			// 编辑
@@ -442,11 +450,12 @@ var Alarm_config = function() {
 								.text().trim();
 						$.post("../AlarmConfigServlet", {
 							"operation" : "deleteAlarmElement",
-							"key" : key
+							"alarmKey":$("#element_td").val(),
+							"itemKey" : key
 						}, function(data) {
 							if (data.success == true) {
 								$.post("../AlarmConfigServlet", {
-									"operation" : "queryAll"
+									"operation" : "queryAllAlarmElement"
 								}, function(data) {
 									initBaseTable(data);
 								}, "json");
@@ -464,18 +473,23 @@ var Alarm_config = function() {
 					var key = $('#v0').val();
 					var value = "";
 					for (var i = 1; i < 7; i++) {
-						value = value + $('#v' + i).val().trim() + ",";
+						var v=$('#v' + i).val().trim();
+						if(v==""){
+							v="0";
+						}
+						value = value + v + ",";
 					}
 					value = value.substring(0, value.length - 1);
 					$.post("../AlarmConfigServlet", {
 						"operation" : form_flag,
-						"key" : key,
+						"alarmKey":$("#v1").val(),
+						"itemKey" : key,
 						"value" : value
 					}, function(data) {
 						$('#form_base').modal('hide');
 						if (data.success == true) {
 							$.post("../AlarmConfigServlet", {
-								"operation" : "queryAll"
+								"operation" : "queryAllAlarmElement"
 							}, function(data) {
 								initBaseTable(data);
 							}, "json");
