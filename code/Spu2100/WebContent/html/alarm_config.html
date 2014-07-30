@@ -222,6 +222,25 @@
 				</div>
 				<!-- END PAGE HEADER-->
 				<!-- BEGIN PAGE CONTENT-->
+				<span>报警通道选择</span>
+				<select class="small m-wrap" id="td_num">
+					<option value="0">0</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+				</select>
 				<div class="row-fluid">
 					<div class="span12">
 						<div class="portlet box blue" id="element">
@@ -229,25 +248,7 @@
 								<div class="caption"><i class="icon-edit"></i>报警元素定义</div>
 							</div>
 							<div class="portlet-body">
-								<span>报警通道选择</span>
-								<select class="small m-wrap" id="element_td">
-									<option value="0">0</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12">12</option>
-									<option value="13">13</option>
-									<option value="14">14</option>
-									<option value="15">15</option>
-								</select>
+								
 								<a id="add_T" data-toggle="modal" class="btn green" href="#form_base">
 									添加工况条件
 									<i class="icon-plus"></i>
@@ -398,13 +399,13 @@
 												</div>
 											</div>
 											<div class="control-group">
-												<label class="control-label">报警元素</label>
+												<label class="control-label">可用报警元素</label>
 												<div class="controls" id="tbuttons">
 												
 												</div>
 											</div>
 											<div class="form-actions">
-												<a class="btn green" id="dd_del">退格</a>
+												<!-- <a class="btn green" id="dd_del">退格</a> -->
 												<button title="ok" id="TTModal_ok" type="button" class="btn blue"><i class="icon-ok"></i> 保存</button>
 												<button title="cancel" type="button"  data-dismiss="modal" class="btn">取消</button>
 											</div>
@@ -436,7 +437,7 @@
 												</div>
 											</div>
 											<div class="control-group">
-												<label class="control-label">报警元素</label>
+												<label class="control-label">可用报警元素</label>
 												<div class="controls" id="cbuttons">
 												
 												</div>
@@ -453,25 +454,6 @@
 							<div class="portlet-body">
 								<p></p>
 								<div class="row-fluid">
-									<span>报警通道选择</span>
-									<select id="key" name="key" class="small m-wrap">
-										<option value="0">0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
-										<option value="13">13</option>
-										<option value="14">14</option>
-										<option value="15">15</option>
-									</select>
 									<a class="btn green" id="add_TT">
 										<i class="icon-plus"></i>添加工况条件
 									</a>
@@ -494,6 +476,12 @@
 						</div>
 					</div>
  				</div>
+ 				<div id="dialog_T_item_noexist" title="消息" class="hide">
+					<p>请先添加工况基本元素！</p>
+				</div>
+				<div id="dialog_C_item_noexist" title="消息" class="hide">
+					<p>请先添加监测量基本元素！</p>
+				</div>
  				<div id="dialog_TTexist" title="消息" class="hide">
 					<p>已经存在工况组合配置，无需添加！</p>
 				</div>
