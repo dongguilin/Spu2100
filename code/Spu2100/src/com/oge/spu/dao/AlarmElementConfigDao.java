@@ -184,7 +184,8 @@ public class AlarmElementConfigDao {
 					if (key.equals(alarmKey)) {
 						flag = true;
 					}
-				} else if (flag && str.contains("=") && str.length() > 1) {
+				} else if (flag && str.startsWith(itemKey) && str.contains("=")
+						&& str.length() > 1) {
 					String[] strs = str.split("=");
 					String value = strs.length == 2 ? strs[1] : "";
 					result = value;
