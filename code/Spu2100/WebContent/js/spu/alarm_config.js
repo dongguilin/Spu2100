@@ -271,7 +271,7 @@ var Alarm_config = function() {
 				}
 			});
 
-			/*$("#cc_del")
+			$("#cc_del")
 					.click(
 							function() {
 								var text = $("#CC").val().trim();
@@ -293,8 +293,8 @@ var Alarm_config = function() {
 								text = text.substring(0, text.length - length);
 								$("#CC").val(text);
 							});
-*/
-			/*$("#dd_del")
+
+			$("#dd_del")
 					.click(
 							function() {
 								var text = $("#TT").val().trim();
@@ -315,7 +315,7 @@ var Alarm_config = function() {
 								}
 								text = text.substring(0, text.length - length);
 								$("#TT").val(text);
-							});*/
+							});
 
 			function initTButtons() {
 				var $tbuttons = $("#tbuttons").empty();
@@ -334,11 +334,12 @@ var Alarm_config = function() {
 						"href" : "javascript:;"
 					});
 					$tbuttons.append($a);
-//					$("#"+id).live('click', function(e) {
-//						var text = $("#TT").val().trim();
-//						text = text + $(this).text();
-//						$("#TT").val(text);
-//					});
+					$("#"+id).click(function(e) {
+						var text = $("#TT").val().trim();
+						console.log(text);
+						text = text + $(this).text();
+						$("#TT").val(text);
+					});
 				}
 			}
 
@@ -358,13 +359,13 @@ var Alarm_config = function() {
 						"class" : "btn purple-stripe",
 						"href" : "javascript:;"
 					});
-//					$("#" + id).live('click', function(e) {
-//						var text = $("#CC").val().trim();
-//						text = text + $(this).text();
-//						console.log($(this).text());
-//						$("#CC").val(text);
-//					});
 					$cbuttons.append($a);
+					$("#" + id).click(function(e) {
+						var text = $("#CC").val().trim();
+						text = text + $(this).text();
+						console.log($(this).text());
+						$("#CC").val(text);
+					});
 				}
 			}
 
