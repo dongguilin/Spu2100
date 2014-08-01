@@ -102,7 +102,7 @@ public class SetupConfigService {
 					}
 				}
 				jclMap.get("JCL" + i).put("MonitorCount",
-						String.valueOf(lastNum - 1));
+						String.valueOf(lastNum));
 			}
 			jclMap.remove("JCL"+lastNum);
 
