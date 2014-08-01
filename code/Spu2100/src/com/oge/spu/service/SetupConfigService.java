@@ -86,6 +86,38 @@ public class SetupConfigService {
 		return result;
 	}
 
+	public boolean deleteJCL(String key) {
+		boolean result = false;
+		try {
+			List<Map<String, Map<String, String>>> list = dao.loadAllForAdd();
+			Map<String, Map<String, String>> jclMap = list
+					.get(Constants.JCL_INDEX);
+			int lastNum = jclMap.size() - 1;
+			int delNum = Integer.valueOf(key.substring(3));
+			for (int i = 0; i < lastNum; i++) {
+				if (i >= delNum) {
+					if (jclMap.containsKey("JCL" + (i + 1))) {
+						jclMap.get("JCL" + i).putAll(
+								jclMap.get("JCL" + (i + 1)));
+					}
+				}
+				jclMap.get("JCL" + i).put("MonitorCount",
+						String.valueOf(lastNum - 1));
+			}
+			jclMap.remove("JCL"+lastNum);
+
+			Map<String, Map<String, String>> newMap = new LinkedHashMap<String, Map<String, String>>();
+			for (Map<String, Map<String, String>> map : list) {
+				newMap.putAll(map);
+			}
+			dao.writeToConf(newMap);
+			result = true;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+
 	public Config loadSingleTypeConfig(String key) {
 		Config config = null;
 		try {

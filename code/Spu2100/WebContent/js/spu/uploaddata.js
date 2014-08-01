@@ -78,7 +78,7 @@ var Uploaddata = function() {
 						}
 						$tr.append($('<td>').text(showtext).attr("title",name).attr("val",value));
 					});
-					$tr.append($('<td><a title="edit" href="javascript:;"><i class="icon-edit"></i>编辑</a></td>'));
+					$tr.append($('<td><a title="edit" href="javascript:;"><i class="icon-edit"></i>编辑</a>&nbsp;&nbsp;<a title="delete" href="javascript:;"><i class="icon-trash"></i>删除</a></td>'));
 					$tbody.append($tr);
 				}
 			}
@@ -109,9 +109,30 @@ var Uploaddata = function() {
 					var $td=$($tds[i]);
 					$("#JCL_"+$td.attr("title")).val($td.attr("val"));
 				}
-				
 			});
 			
+			//删除
+			$("#JCL_info").find("a[title='delete']").live('click',function(){
+				var value=$(this).parents('tr:first').find('td:first').text();
+				$.post(baseurl, {
+					"operation" : "deleteJCL",
+					"key" : value
+				}, function(data) {
+					if(data.success==true){
+						//请求JCL数据
+						$.post(baseurl, {
+							"operation" : "query",
+							"key" : "JCL",
+							"type" : "multi"
+						}, function(data) {
+							initJCLTable(data);
+						}, "json");
+						$( "#dialog_deletesuccess" ).dialog( "open" );
+					}else{
+						$( "#dialog_deletefail" ).dialog( "open" );
+					}
+				}, "json");
+			});
 			//保存
 			$('#JCL_form').find("button:first").click(function(){
 				var data=$('#JCL_form').find("form").serialize();
@@ -309,6 +330,40 @@ var Uploaddata = function() {
 		    
 		  //添加失败提示窗口
 		    $("#dialog_addfail").dialog({
+		      dialogClass: 'ui-dialog-red',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		    //删除成功提示窗口
+		    $("#dialog_deletesuccess").dialog({
+		      dialogClass: 'ui-dialog-blue',
+		      autoOpen: false,
+		      resizable: false,
+		      modal: true,
+		      buttons: [
+		      	{
+		      		"text" : "关闭",
+		      		'class' : 'btn green',
+		      		click: function() {
+	        			$(this).dialog( "close" );
+	      			}
+		      	}
+		      ]
+		    });
+		    
+		  //删除失败提示窗口
+		    $("#dialog_deletefail").dialog({
 		      dialogClass: 'ui-dialog-red',
 		      autoOpen: false,
 		      resizable: false,

@@ -51,7 +51,24 @@ public class SetupConfServlet extends HttpServlet {
 			update(request, response);
 		} else if (operation.equals("delete")) {
 			delete(request, response);
+		} else if (operation.equals("deleteJCL")) {
+			deleteJCL(request,response);
 		}
+	}
+	
+	private void deleteJCL(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		String key = request.getParameter("key");
+		boolean result = service.deleteJCL(key);
+		Map<String, Object> maps = new HashMap<String, Object>();
+		if (result) {
+			maps.put("success", true);
+			maps.put("msg", "删除成功！");
+		} else {
+			maps.put("success", false);
+			maps.put("msg", "删除失败！");
+		}
+		response.getWriter().write(JSONObject.fromObject(maps).toString());
 	}
 
 	private void query(HttpServletRequest request, HttpServletResponse response)
